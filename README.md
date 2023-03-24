@@ -1,4 +1,4 @@
-# Título del Proyecto
+# MealMate
 
 #### Curso Escolar 2022-2023
 
@@ -8,11 +8,11 @@
 
 #### Fecha de Inicio: 23-03-2023
 
-#### Fecha de Finalización: DD-MM-2023
+#### Fecha de Finalización: 14-06-2023
 
 ## Breve descripción del proyecto
 
-
+El proyecto consta del desarrollo de una aplicación web de planificación y seguimiento de dietas y ejercicio donde los usuarios establecen un objetivo el cual ayudará a generar un plan de dieta semanal (desayuno, almuerzo, merienda y cena) y una rutina de ejercicio de lunes a viernes. Estos planes personalizados serán visualizados por los usuarios para hacer su seguimiento.
 
 ## Definir el objetivo de la aplicación
 
@@ -24,9 +24,11 @@ En resumen, el objetivo es ayudar a los usuarios a alcanzar y mantener un estilo
 
 ## Estructura del Proyecto
 
-En este apartado el alumno explicará el contenido del repositorio y de todas las carpetas relevantes del mismo. Para facilitar la gestión de la entrega, todo el código y documentación debe estar en este repositorio.
+En este apartado se explica el contenido del repositorio y de todas las carpetas relevantes del mismo.
 
-Por lo anterior, un proyecto que contenga un Frontend en una tecnología o framework (por ejemplo Angular) y una API REST en otra tecnología o framework (Springboot, Express) deberá tener la siguiente estructura de directorios en el repositorio de entrega:
+Este proyecto trabaja con un Frontend en el que se ha usado el framework Angular y un Backend donde está alojada la API REST donde se ha usado Express.
+
+La estructura del repositorio es la siguiente:
 
 - src-api
 - src-frontend
