@@ -10,11 +10,11 @@
 
 #### Fecha de Finalización: 14-06-2023
 
-## Breve descripción del proyecto
+## Descripción del proyecto
 
 El proyecto consta del desarrollo de una aplicación web de planificación y seguimiento de dietas y ejercicio donde los usuarios establecen un objetivo el cual ayudará a generar un plan de dieta semanal (desayuno, almuerzo, merienda y cena) y una rutina de ejercicio de lunes a viernes. Estos planes personalizados serán visualizados por los usuarios para hacer su seguimiento.
 
-## Definir el objetivo de la aplicación
+## Objetivo de la aplicación
 
 El objetivo del desarrollo de una aplicación web de planificación y seguimiento de dietas y ejercicio es proporcionar una herramienta útil para ayudar a las personas a alcanzar sus objetivos de salud y fitness. La aplicación debe permitir a los usuarios establecer metas de dieta y ejercicio personalizadas y realizar un seguimiento de su progreso a lo largo del tiempo.
 
