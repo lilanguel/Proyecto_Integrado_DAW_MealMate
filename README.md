@@ -30,7 +30,7 @@ Este proyecto trabaja con un Frontend en el que se ha usado el framework Angular
 
 La estructura del repositorio es la siguiente:
 
-- src-api
-- src-frontend
-- docs
+- src-api (backend)
+- MealMate (front-end)
+- docs (documentos)
 - README.md

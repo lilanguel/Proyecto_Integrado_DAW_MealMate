@@ -1,0 +1,118 @@
+<header style="background-color: #9028E1;" class="p-3">
+  <div class="container-fluid">
+    <div class="d-flex">
+      <a href="/main" class="text-white text-decoration-none d-flex">
+        <img style="height: 50px;" src="../assets/imgs/logo mealmate blanco.png" alt="logo_mealmate" class="mx-2">
+        <h1 class="m-0 text-shadow-3">MealMate</h1>
+      </a>
+      <div class="ms-auto align-self-end">
+        <button type="button" style="background-color: #C682DE;"
+          class="btn text-white btn-outline-dark shadow-lg">REGISTRARSE</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MealMate</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/main" routerLinkActive="active">Main</a>
+        </li>
+        <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signin" routerLinkActive="active">Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup" routerLinkActive="active">Sign Up</a>
+          </li>
+        </ng-container>
+        <ng-template #loggedIn>
+          <li class="nav-item">
+            <a class="nav-link" style="cursor: pointer;" (click)="authService.logOut()">Log Out</a>
+          </li>
+        </ng-template>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container p-5">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- Footer -->
+<div style="background-color: #270C43;" class="text-white">
+  <footer class="pt-4 container">
+    <div class="row d-flex flex-row">
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Explorar</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2">Home</li>
+          <li class="nav-item mb-2">Suscripciones</li>
+          <li class="nav-item mb-2">FAQs</li>
+          <li class="nav-item mb-2">Sobre Nosotros</li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Contacto</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2">example@gmail.com</li>
+          <li class="nav-item mb-2">+34 XXX XX XX XX</li>
+          <li class="nav-item mb-2">C. Mamerto, Sevilla</li>
+          <li class="nav-item mb-2">9:00 - 21:00</li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-md-2 mb-3">
+        <h5>Ayuda</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2">Términos y condiciones</li>
+          <li class="nav-item mb-2">Política de privacidad</li>
+          <li class="nav-item mb-2">Cookies</li>
+          <li class="nav-item mb-2">Cancelación y devolución</li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-md-2 mb-3 ms-auto">
+        <img style="height: 160px;" src="../assets/imgs/logo mealmate blanco.png" alt="logo_mealmate">
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-between pt-2 border-top">
+      <p>© 2023, MealMate. Todos los derechos reservados.</p>
+      <ul class="list-unstyled d-flex">
+        <li class="ms-3">
+          <a class="link-dark" href="http://github.com">
+            <i class="bi bi-github text-white"></i>
+          </a>
+        </li>
+
+        <li class="ms-3">
+          <a class="link-dark" href="http://facebook.com">
+            <i class="bi bi-facebook text-white"></i>
+          </a>
+        </li>
+
+        <li class="ms-3">
+          <a class="link-dark" href="http://instagram.com">
+            <i class="bi bi-instagram text-white"></i>
+          </a>
+        </li>
+
+        <li class="ms-3">
+          <a class="link-dark" href="http://twitter.com">
+            <i class="bi bi-twitter text-white"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+</div>
