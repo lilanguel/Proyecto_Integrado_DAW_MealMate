@@ -2,18 +2,19 @@
   <div class="col bg-opacity-50 bg-dark text-white text-center p-5">
     <h1>INICIAR SESIÓN</h1>
     <form (submit)="signIn()">
-      <div class="form-group m-5">
+      <div class="form-group m-4 text-start">
         <label for="email">Email:</label>
-        <input type="text" id="email" [(ngModel)]="user.email" name="email" class="form-control" placeholder="Email"
-          required autofocus>
+        <input type="text" id="email" [(ngModel)]="user.email" name="email" class="form-control"
+          placeholder="Escribe aquí tu email" required autofocus>
       </div>
-      <div class="form-group m-5">
-        <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Password"
-          required>
+      <div class="form-group m-4 text-start">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" [(ngModel)]="user.password" name="password" class="form-control"
+          placeholder="Escribe aquí tu contraseña" required>
       </div>
-      <button type="submit" class="btn btn-primary">Sign in</button>
+      <button type="submit" style="background-color: #C682DE; width: 200px;" class="btn mb-4 btn-outline-dark text-white">ENVIAR</button>
     </form>
-    <a href="/signup" class="text-white text-decoration-none">
+    <a href="/signup" class="text-white">
       ¿No tienes cuenta? Registrate aquí
     </a>
   </div>

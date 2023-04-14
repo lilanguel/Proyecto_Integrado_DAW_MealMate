@@ -2,3 +2,12 @@
   background-image: url('../../../assets/imgs/imagen_login.jpg');
   background-size: cover;
 }
+
+a {
+  text-decoration: none; /* Inicialmente sin subrayado */
+  transition: text-decoration 0.2s ease-in; /* Transición suave de 0.2 segundos */
+}
+
+a:hover {
+  text-decoration: underline; /* Subrayado al pasar el ratón por encima */
+}

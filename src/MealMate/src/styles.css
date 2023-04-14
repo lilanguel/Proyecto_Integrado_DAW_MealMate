@@ -1,17 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 
-@font-face{
+@font-face {
   font-family: 'Franklin Gothic Medium Cond';
   src: url('assets/fonts/FRAMDCN.TTF');
   font-weight: normal;
   font-style: normal;
 }
 
-body{
+body {
   font-family: 'Franklin Gothic Medium Cond', sans-serif !important;
 }
 
-label, a, p, input, button, li{
-  font-size:1.3rem;
+label {
+  font-size: 1.3rem;
+}
+
+a, li {
+  font-size: 1.1rem;
 }
