@@ -8,7 +8,10 @@
   font-style: normal;
 }
 
-
 body{
   font-family: 'Franklin Gothic Medium Cond', sans-serif !important;
+}
+
+label, a, p, input, button, li{
+  font-size:1.3rem;
 }
