@@ -1,0 +1,19 @@
+#fondo_registro {
+  background-image: url('../../../assets/imgs/imagen_registro.jpg');
+  background-size: cover;
+}
+
+.btn {
+  font-size: 1.5rem !important;
+  background-color: #C682DE; width: 200px !important;
+}
+
+a {
+  text-decoration: none;
+  transition: text-decoration 0.2s ease-in;
+  font-size: 1.5rem;
+}
+
+a:hover {
+  text-decoration: underline;
+}
