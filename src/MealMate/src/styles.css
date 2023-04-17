@@ -33,3 +33,8 @@ input::placeholder {
   font-size: 1.5rem;
 }
 
+.text-warning{
+  text-align: start;
+  margin-left: 7px;
+  font-size: 1.3rem;
+}

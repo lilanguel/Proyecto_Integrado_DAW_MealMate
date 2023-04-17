@@ -66,11 +66,11 @@ router.post('/signin', async (req, res) => {
         email
     })
 
-    if (!user) return res.status(401).send("The email doesn't exists")
+    if (!user) return res.status(401).send("El correo no existe")
 
     const passwordMatch = await bcrypt.compare(password, user.password)
 
-    if (!passwordMatch) return res.status(401).send("Wrong password")
+    if (!passwordMatch) return res.status(401).send("La contraseña no es correcta")
 
     const token = jwt.sign({
         _id: user._id
