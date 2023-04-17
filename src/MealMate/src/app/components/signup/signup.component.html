@@ -7,8 +7,7 @@
         <div class="form-group text-start m-4">
           <label for="nombre_usuario">Nombre de usuario:</label>
           <input id="nombre_usuario" type="text" formControlName="nombre_usuario" [(ngModel)]="user.nombre_usuario"
-            name="nombre_usuario" class="form-control" placeholder="Escribe aquí tu nombre de usuario" required
-            autofocus>
+            name="nombre_usuario" class="form-control" placeholder="Escribe aquí tu nombre de usuario" required>
           <div class="text-warning"
             *ngIf="userForm.get('nombre_usuario')?.hasError('required') && userForm.get('nombre_usuario')?.touched">
             <span>El nombre de usuario es obligatorio</span>
@@ -72,7 +71,7 @@
         <button type="submit" [disabled]="userForm.invalid" class="btn btn-outline-dark text-white">ENVIAR</button>
       </form>
       <a href="/signin" class="text-white">
-        ¿Ya tienes cuenta? Inicia sesión aquí
+        ¿Ya tienes cuenta? <span class="text-primary">Inicia sesión aquí</span>
       </a>
     </div>
   </div>

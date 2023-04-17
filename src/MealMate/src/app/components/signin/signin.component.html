@@ -5,7 +5,7 @@
       <div class="form-group m-4 text-start">
         <label for="email">Email:</label>
         <input type="email" id="email" formControlName="email" [(ngModel)]="user.email" name="email"
-          class="form-control" placeholder="Escribe aquí tu email" required autofocus>
+          class="form-control" placeholder="Escribe aquí tu email" required>
         <div class="text-warning" *ngIf="userForm.get('email')?.hasError('required') && userForm.get('email')?.touched">
           <span>Introduce el email</span>
         </div>
@@ -23,7 +23,7 @@
       <button type="submit" [disabled]="userForm.invalid" class="btn my-4 btn-outline-dark text-white">ENVIAR</button>
     </form>
     <a href="/signup" class="text-white">
-      ¿No tienes cuenta? Regístrate aquí
+      ¿No tienes cuenta? <span class="text-primary">Regístrate aquí</span>
     </a>
   </div>
   <div class="col"></div>
