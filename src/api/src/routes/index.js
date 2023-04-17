@@ -50,6 +50,7 @@ router.post('/signup', async (req, res) => {
     const token = jwt.sign({
         _id: newUser._id
     }, 'secretkey')
+
     res.status(200).json({
         token
     })
@@ -74,6 +75,7 @@ router.post('/signin', async (req, res) => {
     const token = jwt.sign({
         _id: user._id
     }, 'secretkey');
+
     res.status(200).json({
         token
     })
