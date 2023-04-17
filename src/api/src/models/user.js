@@ -9,22 +9,34 @@ var SALT_WORK_FACTOR = 10;
 const userSchema = new Schema({
     nombre_usuario: {
         type: String,
+        required: true,
+        unique: true
     },
     email: {
         type: String,
+        required: true,
+        unique: true
     },
     sexo: {
         type: String,
         enum: ["hombre", "mujer"],
+        required: true
     },
     fecha_nacimiento: {
         type: Date,
+        required: true
     },
     password: {
         type: String,
+        required: true
     },
     peso: {
         type: Number,
+        required: true
+    },
+    altura:{
+        type: Number,
+        required: true
     },
     admin: {
         type: Boolean,
@@ -33,13 +45,6 @@ const userSchema = new Schema({
 }, {
     timestamps: true
 })
-
-userSchema.methods.comparePassword = function (candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
-};
 
 userSchema.pre('save', function (next) {
     var user = this;

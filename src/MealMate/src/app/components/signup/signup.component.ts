@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -8,21 +9,36 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
+  userForm: FormGroup;
+
   user = {
-    email:'',
-    password:''
+    nombre_usuario: '',
+    email: '',
+    sexo: '',
+    fecha_nacimiento: '',
+    password: '',
+    peso: '',
+    altura: '',
   };
 
   ngOnInit() {}
 
-  constructor(private authService: AuthService, private router:Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.userForm = this.fb.group({
+      user: ['', Validators.required],
+    });
+  }
 
   signUp() {
     this.authService.signUp(this.user).subscribe(
       (res) => {
         console.log(res);
-        localStorage.setItem('token',res.token);
-        this.router.navigate(['/main'])
+        localStorage.setItem('token', res.token);
+        this.router.navigate(['/main']);
       },
       (err) => console.log(err)
     );

@@ -5,11 +5,14 @@
   </a>
 
   <ul class="nav nav-pills">
-    <ng-container *ngIf="authService.loggedIn();">
+    <ng-container *ngIf="authService.loggedIn(); else loggedIn">
       <li class="nav-item">
         <a class="nav-link" style="cursor: pointer;" (click)="authService.logOut()">Log Out</a>
       </li>
     </ng-container>
+    <ng-template #loggedIn>
+
+    </ng-template>
 
   </ul>
 </header>

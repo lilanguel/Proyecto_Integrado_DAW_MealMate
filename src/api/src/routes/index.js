@@ -8,18 +8,42 @@ const User = require('../models/user')
 
 const jwt = require('jsonwebtoken')
 
+var bcrypt = require('bcryptjs');
+
 router.get('/', (req, res) => res.send('Hello world!'))
 
 router.post('/signup', async (req, res) => {
     const {
+        nombre_usuario,
         email,
-        password
+        sexo,
+        fecha_nacimiento,
+        password,
+        peso,
+        altura
     } = req.body
 
     const newUser = new User({
+        nombre_usuario,
         email,
-        password
+        sexo,
+        fecha_nacimiento,
+        password,
+        peso,
+        altura
     })
+
+    if (await User.findOne({
+            email
+        })) {
+        return res.status(401).send("El correo ya está en uso")
+    }
+
+    if (await User.findOne({
+            nombre_usuario
+        })) {
+        return res.status(401).send("El nombre de usuario ya está en uso")
+    }
 
     await newUser.save();
 
@@ -29,8 +53,6 @@ router.post('/signup', async (req, res) => {
     res.status(200).json({
         token
     })
-
-    console.log(token)
 })
 
 router.post('/signin', async (req, res) => {
@@ -44,7 +66,10 @@ router.post('/signin', async (req, res) => {
     })
 
     if (!user) return res.status(401).send("The email doesn't exists")
-    if (user.password !== password) return res.status(401).send("Wrong password")
+
+    const passwordMatch = await bcrypt.compare(password, user.password)
+
+    if (!passwordMatch) return res.status(401).send("Wrong password")
 
     const token = jwt.sign({
         _id: user._id
@@ -69,8 +94,6 @@ router.get('/main', verifyToken, (req, res) => {
     ])
 })
 
-module.exports = router
-
 function verifyToken(req, res, next) {
     if (!req.headers.authorization) {
         return res.status(401).send('Unauthorized request')
@@ -87,3 +110,5 @@ function verifyToken(req, res, next) {
     req.userId = payload._id
     next()
 }
+
+module.exports = router
