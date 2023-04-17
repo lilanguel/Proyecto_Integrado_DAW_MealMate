@@ -9,6 +9,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
+  public errorMessage!: string;
+
   userForm: FormGroup;
 
   user = {
@@ -29,7 +31,13 @@ export class SignupComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.userForm = this.fb.group({
-      user: ['', Validators.required],
+      nombre_usuario: ['', Validators.required],
+      email: ['', Validators.required],
+      sexo: ['', Validators.required],
+      fecha_nacimiento: ['', Validators.required],
+      password: ['', Validators.required],
+      peso: ['', Validators.required],
+      altura: ['', Validators.required],
     });
   }
 
@@ -40,7 +48,10 @@ export class SignupComponent implements OnInit {
         localStorage.setItem('token', res.token);
         this.router.navigate(['/main']);
       },
-      (err) => console.log(err)
+      (err) => {
+        console.log(err);
+        this.errorMessage = err.error;
+      }
     );
   }
 }
