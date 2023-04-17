@@ -31,6 +31,10 @@ const ejercicioSchema = new Schema({
     musculo: {
         type: String,
         required: true
+    },
+    objetivo: {
+        type:Schema.Types.ObjectId,
+        ref: objetivo
     }
 }, {
     timestamps: true

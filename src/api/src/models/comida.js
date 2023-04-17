@@ -3,6 +3,8 @@ const {
     model
 } = require('mongoose')
 
+const objetivo = require("./objetivo.js");
+
 const comidaSchema = new Schema({
     nombre: {
         type: String,
@@ -32,6 +34,10 @@ const comidaSchema = new Schema({
         type: String,
         enum: ["desayuno", "almuerzo", "merienda", "cena"],
         required: true
+    },
+    objetivo: {
+        type:Schema.Types.ObjectId,
+        ref: objetivo
     }
 }, {
     timestamps: true
