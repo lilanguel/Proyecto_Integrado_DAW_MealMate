@@ -48,8 +48,9 @@ router.post('/signup', async (req, res) => {
     await newUser.save();
 
     const token = jwt.sign({
-        _id: newUser._id
-    }, 'secretkey')
+        _id: newUser._id,
+        admin: newUser.admin
+    }, process.env.JWT_SECRET)
 
     res.status(200).json({
         token
@@ -73,8 +74,9 @@ router.post('/signin', async (req, res) => {
     if (!passwordMatch) return res.status(401).send("La contraseña no es correcta")
 
     const token = jwt.sign({
-        _id: user._id
-    }, 'secretkey');
+        _id: user._id,
+        admin: user.admin
+    }, process.env.JWT_SECRET);
 
     res.status(200).json({
         token
@@ -107,7 +109,7 @@ function verifyToken(req, res, next) {
         return res.status(401).send('Unauthorized request')
     }
 
-    const payload = jwt.verify(token, 'secretkey')
+    const payload = jwt.verify(token, process.env.JWT_SECRET)
 
     req.userId = payload._id
     next()

@@ -3,6 +3,8 @@ const {
     model
 } = require('mongoose')
 
+const objetivo = require("./objetivo.js");
+
 const ejercicioSchema = new Schema({
     nombre: {
         type: String,
