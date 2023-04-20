@@ -49,7 +49,7 @@ router.post('/signup', async (req, res) => {
 
     const token = jwt.sign({
         _id: newUser._id,
-        admin: newUser.admin
+        role: newUser.role
     }, process.env.JWT_SECRET)
 
     res.status(200).json({
@@ -75,27 +75,12 @@ router.post('/signin', async (req, res) => {
 
     const token = jwt.sign({
         _id: user._id,
-        admin: user.admin
+        role: user.role
     }, process.env.JWT_SECRET);
 
     res.status(200).json({
         token
     })
-})
-
-router.get('/main', verifyToken, (req, res) => {
-    res.json([{
-            name: 1,
-            description: "hola desde 1"
-        }, {
-            name: 2,
-            description: "hola desde 2"
-        },
-        {
-            name: 3,
-            description: "hola desde 3"
-        }
-    ])
 })
 
 function verifyToken(req, res, next) {

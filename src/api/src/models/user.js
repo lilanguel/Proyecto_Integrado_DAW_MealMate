@@ -34,13 +34,14 @@ const userSchema = new Schema({
         type: Number,
         required: true
     },
-    altura:{
+    altura: {
         type: Number,
         required: true
     },
-    admin: {
-        type: Boolean,
-        default: false
+    role: {
+        type: String,
+        enum: ['admin', 'restricted'],
+        default: 'restricted'
     }
 }, {
     timestamps: true
