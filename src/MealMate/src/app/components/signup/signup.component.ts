@@ -31,13 +31,13 @@ export class SignupComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.userForm = this.fb.group({
-      nombre_usuario: ['', Validators.required],
+      nombre_usuario: ['', [Validators.required]],
       email: ['', Validators.required],
       sexo: ['', Validators.required],
       fecha_nacimiento: ['', Validators.required],
       password: ['', Validators.required],
       peso: ['', Validators.required],
-      altura: ['', Validators.required],
+      altura: ['', [Validators.required]],
     });
   }
 
@@ -50,7 +50,7 @@ export class SignupComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.errorMessage = err.error;
+        this.errorMessage = err.error.errors[0].msg;
       }
     );
   }

@@ -4,6 +4,7 @@ const {
 const {
     validateResult
 } = require('../helpers/validateHelper')
+const User = require('../models/user')
 
 const validateCreate = [
     check('nombre_usuario')
@@ -13,14 +14,31 @@ const validateCreate = [
     .isLength({
         max: 15
     })
-    .withMessage('El nombre de usuario debe tener menos de 15 caracteres'),
+    .custom(async (value) => {
+        const user = await User.findOne({
+            nombre_usuario: value
+        });
+        if (user) {
+            throw new Error('El nombre de usuario ya está en uso');
+        }
+        return true;
+    }),
 
     check('email')
     .exists()
     .not()
     .isEmpty()
-    .isEmail()
-    .withMessage('El email debe ser un email válido'),
+    .isEmail().withMessage('El email debe ser un email con formato correcto')
+    .custom(async (value) => {
+        const user = await User.findOne({
+            email: value
+        });
+        if (user) {
+            throw new Error('El correo ya está en uso');
+
+        }
+        return true;
+    }),
 
     check('sexo')
     .exists()

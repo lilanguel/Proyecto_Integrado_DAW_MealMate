@@ -8,7 +8,7 @@ const User = require('../models/user')
 
 const jwt = require('jsonwebtoken')
 
-var bcrypt = require('bcryptjs');
+var bcrypt = require('bcryptjs')
 
 const {
     validateCreate
@@ -36,18 +36,6 @@ router.post('/signup', validateCreate, async (req, res) => {
         peso,
         altura
     })
-
-    if (await User.findOne({
-            email
-        })) {
-        return res.status(401).send("El correo ya está en uso")
-    }
-
-    if (await User.findOne({
-            nombre_usuario
-        })) {
-        return res.status(401).send("El nombre de usuario ya está en uso")
-    }
 
     await newUser.save();
 
