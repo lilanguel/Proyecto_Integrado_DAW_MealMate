@@ -10,9 +10,13 @@ const jwt = require('jsonwebtoken')
 
 var bcrypt = require('bcryptjs');
 
+const {
+    validateCreate
+} = require('../validators/users')
+
 router.get('/', (req, res) => res.send('Hello world!'))
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', validateCreate, async (req, res) => {
     const {
         nombre_usuario,
         email,

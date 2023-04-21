@@ -25,6 +25,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "nodemon": "^2.0.22",
+    "path": "^0.12.7",
     "tslib": "^2.5.0"
   }
 }

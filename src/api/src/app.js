@@ -4,9 +4,11 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 var bcrypt = require('bcryptjs');
+var path = require('path');
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Models
 const User = require('./models/user')
@@ -22,12 +24,14 @@ const mongooseAdminbro = require('@admin-bro/mongoose')
 AdminBro.registerAdapter(mongooseAdminbro)
 
 const AdminBroOptions = {
+    assets: {
+        styles: ["/custom.css"]
+    },
     resources: [User, Comida, Ejercicio, Objetivo]
 }
 
 const adminBro = new AdminBro(AdminBroOptions)
 
-// Build and use a router which will handle all AdminBro routes
 const router = expressAdminbro.buildAuthenticatedRouter(adminBro, {
     authenticate: async (email, password) => {
         const user = await User.findOne({
