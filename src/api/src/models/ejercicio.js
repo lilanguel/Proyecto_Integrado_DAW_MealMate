@@ -3,8 +3,6 @@ const {
     model
 } = require('mongoose')
 
-const objetivo = require("./objetivo.js");
-
 const ejercicioSchema = new Schema({
     nombre: {
         type: String,
@@ -35,9 +33,9 @@ const ejercicioSchema = new Schema({
         required: true
     },
     objetivo: {
-        type:Schema.Types.ObjectId,
-        ref: objetivo
-    }
+        type: String,
+        enum: ["Perder peso", "Tonificar", "Aumentar masa muscular", "Mejorar rendimiento"]
+    },
 }, {
     timestamps: true
 })

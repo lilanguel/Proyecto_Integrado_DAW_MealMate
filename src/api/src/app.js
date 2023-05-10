@@ -14,7 +14,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 const User = require('./models/user')
 const Comida = require('./models/comida')
 const Ejercicio = require('./models/ejercicio')
-const Objetivo = require('./models/objetivo')
 
 // AdminBro
 const AdminBro = require('admin-bro')
@@ -27,7 +26,7 @@ const AdminBroOptions = {
     assets: {
         styles: ["/custom.css"]
     },
-    resources: [User, Comida, Ejercicio, Objetivo]
+    resources: [User, Comida, Ejercicio]
 }
 
 const adminBro = new AdminBro(AdminBroOptions)

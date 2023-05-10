@@ -12,8 +12,8 @@ body {
   font-family: 'Franklin Gothic Medium Cond', sans-serif !important;
 }
 
-li {
-  font-size: 1.1rem;
+li, p {
+  font-size: 1.3rem;
 }
 
 .titulo {

@@ -38,6 +38,10 @@ const userSchema = new Schema({
         type: Number,
         required: true
     },
+    objetivo: {
+        type: String,
+        enum: ["Perder peso", "Tonificar", "Aumentar masa muscular", "Mejorar rendimiento"]
+    },
     role: {
         type: String,
         enum: ['admin', 'restricted'],

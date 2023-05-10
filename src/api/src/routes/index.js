@@ -92,4 +92,51 @@ function verifyToken(req, res, next) {
     next()
 }
 
+function verificarToken(req, res, next) {
+    const token = req.headers.authorization.split(' ')[1]
+
+    if (!token) {
+        return res.status(401).json({
+            mensaje: 'No autorizado'
+        });
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET, (error, usuario) => {
+        if (error) {
+            return res.status(401).json({
+                mensaje: 'Token no válido'
+            });
+        }
+
+        req.usuario = usuario;
+        next();
+    });
+}
+
+router.put('/objetivo/:id', verificarToken, (req, res) => {
+    const idUsuario = req.params.id;
+    const nuevoObjetivo = req.body.objetivo;
+
+    if (idUsuario !== req.usuario._id) {
+        return res.status(401).json({
+            mensaje: 'No autorizado'
+        });
+    }
+
+    User.findByIdAndUpdate(idUsuario, {
+            objetivo: nuevoObjetivo
+        })
+        .then(() => {
+            res.json({
+                mensaje: 'Objetivo actualizado'
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json({
+                mensaje: 'Error al actualizar el objetivo'
+            });
+        });
+});
+
 module.exports = router
