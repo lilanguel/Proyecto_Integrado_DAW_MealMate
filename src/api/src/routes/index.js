@@ -117,12 +117,17 @@ router.put('/objetivo/:id', verificarToken, (req, res) => {
     const idUsuario = req.params.id;
     const nuevoObjetivo = req.body.objetivo;
 
+    // Comprobar si el usuario es el propietario del objetivo
     if (idUsuario !== req.usuario._id) {
         return res.status(401).json({
             mensaje: 'No autorizado'
         });
     }
 
+    console.log(req.usuario)
+    console.log(nuevoObjetivo)
+
+    // Actualizar el objetivo del usuario
     User.findByIdAndUpdate(idUsuario, {
             objetivo: nuevoObjetivo
         })

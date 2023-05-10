@@ -1,0 +1,29 @@
+#fondoCabecera {
+  background-image: url('../../../assets/imgs/imagen_superior_objetivos.jpg');
+  background-size: cover;
+}
+
+.opciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.opcion:hover {
+  transform: scale(1.1);
+}
+
+.btn {
+  font-size: 1.5rem !important;
+  background-color: #C682DE; width: 200px !important;
+}
+
+.col img {
+  width: 100%;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
