@@ -143,15 +143,19 @@ router.put('/generar-rutina/:id', async (req, res) => {
         });
 
         // obtener un conjunto aleatorio de ejercicios de los que se han filtrado
-        const ejerciciosAleatorios = lodash.sampleSize(ejercicios, 4);
+        const ejerciciosAleatorios1 = lodash.sampleSize(ejercicios, 4);
+        const ejerciciosAleatorios2 = lodash.sampleSize(ejercicios, 4);
+        const ejerciciosAleatorios3 = lodash.sampleSize(ejercicios, 4);
+        const ejerciciosAleatorios4 = lodash.sampleSize(ejercicios, 4);
+        const ejerciciosAleatorios5 = lodash.sampleSize(ejercicios, 4);
 
         // añadir los ejercicios aleatorios a cada array de rutina correspondiente
         const rutina = {
-            rutina_lunes: ejerciciosAleatorios,
-            rutina_martes: ejerciciosAleatorios,
-            rutina_miercoles: ejerciciosAleatorios,
-            rutina_jueves: ejerciciosAleatorios,
-            rutina_viernes: ejerciciosAleatorios
+            rutina_lunes: ejerciciosAleatorios1,
+            rutina_martes: ejerciciosAleatorios2,
+            rutina_miercoles: ejerciciosAleatorios3,
+            rutina_jueves: ejerciciosAleatorios4,
+            rutina_viernes: ejerciciosAleatorios5
         };
 
         // actualizar la rutina del usuario
