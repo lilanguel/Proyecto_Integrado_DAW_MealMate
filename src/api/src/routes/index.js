@@ -18,8 +18,6 @@ const {
     validateCreate
 } = require('../validators/users')
 
-router.get('/', (req, res) => res.send('Hello world!'))
-
 router.post('/signup', validateCreate, async (req, res) => {
     const {
         nombre_usuario,
@@ -78,23 +76,6 @@ router.post('/signin', async (req, res) => {
         token
     })
 })
-
-function verifyToken(req, res, next) {
-    if (!req.headers.authorization) {
-        return res.status(401).send('Unauthorized request')
-    }
-
-    const token = req.headers.authorization.split(' ')[1]
-
-    if (token == null) {
-        return res.status(401).send('Unauthorized request')
-    }
-
-    const payload = jwt.verify(token, process.env.JWT_SECRET)
-
-    req.userId = payload._id
-    next()
-}
 
 function verificarToken(req, res, next) {
     const token = req.headers.authorization.split(' ')[1]
@@ -184,6 +165,78 @@ router.put('/generar-rutina/:id', async (req, res) => {
         res.status(500).json({
             message: 'Ha ocurrido un error al generar la rutina'
         });
+    }
+});
+
+// Endpoint para obtener un ejercicio por su id
+router.get('/ejercicio/:id', async (req, res) => {
+    try {
+        const ejercicio = await Ejercicio.findById(req.params.id);
+        if (!ejercicio) {
+            return res.status(404).json({
+                message: 'Ejercicio no encontrado'
+            });
+        }
+        return res.json(ejercicio);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({
+            message: 'Error del servidor'
+        });
+    }
+});
+
+// Endpoint para obtener todos los ejercicios
+router.get('/ejercicios', async (req, res) => {
+    try {
+        const ejercicios = await Ejercicio.find();
+        if (!ejercicios) {
+            return res.status(404).json({
+                message: 'No hay ejercicios'
+            });
+        }
+        return res.json(ejercicios);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({
+            message: 'Error del servidor'
+        });
+    }
+});
+
+// Endpoint para obtener los datos de un usuario por su id
+router.get('/users/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+            .populate({
+                path: 'rutina_lunes._id',
+                model: 'Ejercicio'
+            })
+            .populate({
+                path: 'rutina_martes._id',
+                model: 'Ejercicio'
+            })
+            .populate({
+                path: 'rutina_miercoles._id',
+                model: 'Ejercicio'
+            })
+            .populate({
+                path: 'rutina_jueves._id',
+                model: 'Ejercicio'
+            })
+            .populate({
+                path: 'rutina_viernes._id',
+                model: 'Ejercicio'
+            });
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        res.send(user);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
     }
 });
 
