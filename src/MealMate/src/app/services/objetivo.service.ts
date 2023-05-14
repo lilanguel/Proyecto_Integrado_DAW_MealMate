@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +11,6 @@ export class ObjetivoService {
   constructor(private http: HttpClient) {}
 
   seleccionarObjetivo(id: number, objetivo: string) {
-    console.log(objetivo)
-    console.log(id)
     return this.http.put(`${this.apiUrl}objetivo/${id}`, {
       'objetivo': objetivo
     });

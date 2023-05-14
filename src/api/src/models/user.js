@@ -5,6 +5,7 @@ const {
 
 var bcrypt = require('bcryptjs');
 var SALT_WORK_FACTOR = 10;
+const Ejercicio = require('./ejercicio');
 
 const userSchema = new Schema({
     nombre_usuario: {
@@ -46,7 +47,37 @@ const userSchema = new Schema({
         type: String,
         enum: ['admin', 'restricted'],
         default: 'restricted'
-    }
+    },
+    rutina_lunes: [{
+        ejercicio: {
+            type: Schema.Types.ObjectId,
+            ref: 'Ejercicio'
+        }
+    }],
+    rutina_martes: [{
+        ejercicio: {
+            type: Schema.Types.ObjectId,
+            ref: 'Ejercicio'
+        }
+    }],
+    rutina_miercoles: [{
+        ejercicio: {
+            type: Schema.Types.ObjectId,
+            ref: 'Ejercicio'
+        }
+    }],
+    rutina_jueves: [{
+        ejercicio: {
+            type: Schema.Types.ObjectId,
+            ref: 'Ejercicio'
+        }
+    }],
+    rutina_viernes: [{
+        ejercicio: {
+            type: Schema.Types.ObjectId,
+            ref: 'Ejercicio'
+        }
+    }],
 }, {
     timestamps: true
 })

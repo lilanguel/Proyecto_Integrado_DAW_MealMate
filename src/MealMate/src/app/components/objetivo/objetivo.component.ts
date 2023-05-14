@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { ObjetivoService } from 'src/app/services/objetivo.service';
 
@@ -14,7 +15,8 @@ export class ObjetivoComponent {
   constructor(
     private authService: AuthService,
     private objetivoService: ObjetivoService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -24,11 +26,11 @@ export class ObjetivoComponent {
   seleccionarObjetivo(opcion: string) {
     this.objetivoService.seleccionarObjetivo(this.user, opcion).subscribe(
       (res) => {
-        console.log(res);
+        this.toastr.success(`¡${opcion} es una muy buena opción!`,'Objetivo seleccionado');
         this.router.navigate(['/main']);
       },
       (err) => {
-        console.log(err);
+        this.toastr.error(`No se ha podido establacer el objetivo con éxito`,'Error');
       }
     );
   }
