@@ -78,6 +78,11 @@ router.post('/signin', async (req, res) => {
 })
 
 function verificarToken(req, res, next) {
+    if (req.headers.authorization == null) {
+        return res.status(401).json({
+            mensaje: 'No autorizado'
+        });
+    }
     const token = req.headers.authorization.split(' ')[1]
 
     if (!token) {
@@ -125,9 +130,17 @@ router.put('/objetivo/:id', verificarToken, (req, res) => {
         });
 });
 
-router.put('/generar-rutina/:id', async (req, res) => {
+router.put('/generar-rutina/:id', verificarToken, async (req, res) => {
     try {
         const usuario = await User.findById(req.params.id);
+        const idUsuario = req.params.id;
+
+        // Comprobar si el usuario es correcto
+        if (idUsuario !== req.usuario._id) {
+            return res.status(401).json({
+                mensaje: 'No autorizado'
+            });
+        }
 
         if (!usuario) {
             return res.status(404).json({
@@ -172,45 +185,18 @@ router.put('/generar-rutina/:id', async (req, res) => {
     }
 });
 
-// Endpoint para obtener un ejercicio por su id
-router.get('/ejercicio/:id', async (req, res) => {
-    try {
-        const ejercicio = await Ejercicio.findById(req.params.id);
-        if (!ejercicio) {
-            return res.status(404).json({
-                message: 'Ejercicio no encontrado'
-            });
-        }
-        return res.json(ejercicio);
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).json({
-            message: 'Error del servidor'
-        });
-    }
-});
-
-// Endpoint para obtener todos los ejercicios
-router.get('/ejercicios', async (req, res) => {
-    try {
-        const ejercicios = await Ejercicio.find();
-        if (!ejercicios) {
-            return res.status(404).json({
-                message: 'No hay ejercicios'
-            });
-        }
-        return res.json(ejercicios);
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).json({
-            message: 'Error del servidor'
-        });
-    }
-});
-
 // Endpoint para obtener los datos de un usuario por su id
-router.get('/users/:id', async (req, res) => {
+router.get('/users/:id', verificarToken, async (req, res) => {
     try {
+        const idUsuario = req.params.id;
+
+        // Comprobar si el usuario es correcto
+        if (idUsuario !== req.usuario._id) {
+            return res.status(401).json({
+                mensaje: 'No autorizado'
+            });
+        }
+
         const user = await User.findById(req.params.id)
             .populate({
                 path: 'rutina_lunes._id',
