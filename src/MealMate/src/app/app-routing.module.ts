@@ -7,6 +7,7 @@ import {SigninComponent} from './components/signin/signin.component'
 
 import { AuthGuard } from './auth.guard';
 import { ObjetivoComponent } from './components/objetivo/objetivo.component';
+import { RutinaComponent } from './components/rutina/rutina.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,11 @@ const routes: Routes = [
   {
     path:'objetivo',
     component:ObjetivoComponent,
+    canActivate:[AuthGuard]
+  },
+  {
+    path:'rutina',
+    component:RutinaComponent,
     canActivate:[AuthGuard]
   },
   {
