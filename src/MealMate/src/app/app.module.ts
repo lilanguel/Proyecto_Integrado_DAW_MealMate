@@ -14,6 +14,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ObjetivoComponent } from './components/objetivo/objetivo.component';
 import { ToastrModule } from 'ngx-toastr';
+import { RutinaComponent } from './components/rutina/rutina.component';
+import { DietaComponent } from './components/dieta/dieta.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { ToastrModule } from 'ngx-toastr';
     SignupComponent,
     SigninComponent,
     MainComponent,
-    ObjetivoComponent
+    ObjetivoComponent,
+    RutinaComponent,
+    DietaComponent
   ],
   imports: [
     BrowserModule,
