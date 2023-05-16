@@ -26,7 +26,7 @@ const routes: Routes = [
     canActivate:[AuthGuard]
   },
   {
-    path:'rutina',
+    path:'rutina/:dia',
     component:RutinaComponent,
     canActivate:[AuthGuard]
   },

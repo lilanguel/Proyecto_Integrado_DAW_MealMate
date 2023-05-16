@@ -230,4 +230,58 @@ router.get('/users/:id', verificarToken, async (req, res) => {
     }
 });
 
+router.get('/users/:id/rutina/:dia', verificarToken, async (req, res) => {
+    try {
+        const idUsuario = req.params.id;
+
+        // Comprobar si el usuario es correcto
+        if (idUsuario !== req.usuario._id) {
+            return res.status(401).json({
+                mensaje: 'No autorizado'
+            });
+        }
+
+        const user = await User.findById(req.params.id).populate({
+            path: `rutina_${req.params.dia}._id`,
+            model: 'Ejercicio'
+        });
+        if (!user) {
+            return res.status(404).json({
+                message: 'User not found'
+            });
+        }
+
+        const dia = req.params.dia;
+        let rutina = [];
+
+        switch (dia) {
+            case 'lunes':
+                rutina = user.rutina_lunes.map((item) => item._id);
+                break;
+            case 'martes':
+                rutina = user.rutina_martes.map((item) => item._id);
+                break;
+            case 'miercoles':
+                rutina = user.rutina_miercoles.map((item) => item._id);
+                break;
+            case 'jueves':
+                rutina = user.rutina_jueves.map((item) => item._id);
+                break;
+            case 'viernes':
+                rutina = user.rutina_viernes.map((item) => item._id);
+                break;
+            default:
+                return res.status(400).json({
+                    message: 'Invalid day'
+                });
+        }
+        res.json(rutina);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({
+            message: 'Server Error'
+        });
+    }
+});
+
 module.exports = router

@@ -1,3 +1,31 @@
-<div id="backgroundImage">
+<div id="backgroundImage" class="row text-center text-white">
+  <div class="col-md-5 bg-black bg-opacity-50 p-5">
+    <h1 class="m-2">TU RUTINA DEL {{ diaSemana | uppercase }}</h1>
+    <p>Lleva tu entrenamiento al siguiente nivel</p>
 
-</div>
+    <div class="row">
+      <div *ngFor="let ejercicio of rutina; let i = index" class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">{{ ejercicio.nombre | uppercase }}</h3>
+            <button type="button" class="btn btn-outline-dark text-white" data-bs-toggle="modal"
+            [attr.data-bs-target]="'#modal' + i">MÁS</button>
+          </div>
+        </div>
+        <div class="modal fade" [id]="'modal' + i" tabindex="-1" aria-labelledby="modalEjercicio" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body text-dark">
+                {{ ejercicio.nombre | uppercase }}
+                {{ejercicio.descripcion}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7">
+
+    </div>
+
+  </div>
