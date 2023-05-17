@@ -3,29 +3,43 @@
     <h1 class="m-2">TU RUTINA DEL {{ diaSemana | uppercase }}</h1>
     <p>Lleva tu entrenamiento al siguiente nivel</p>
 
-    <div class="row">
-      <div *ngFor="let ejercicio of rutina; let i = index" class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">{{ ejercicio.nombre | uppercase }}</h3>
-            <button type="button" class="btn btn-outline-dark text-white" data-bs-toggle="modal"
-            [attr.data-bs-target]="'#modal' + i">MÁS</button>
-          </div>
+    <div class="row" *ngIf="rutina.length > 0">
+      <div *ngFor="let ejercicio of rutina; let i = index" class="col-md-6 text-start">
+        <div class="bg-white p-4 my-4" style="border-top: #9028e1 5px solid;">
+          <i class="fa-solid fa-dumbbell fa-2xl mb-4" style="color: #9028e1;"></i>
+          <h4 class="text-dark">{{ ejercicio.nombre | uppercase }}</h4>
+          <a class="text-muted" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + i">MÁS</a>
         </div>
         <div class="modal fade" [id]="'modal' + i" tabindex="-1" aria-labelledby="modalEjercicio" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-body text-dark">
-                {{ ejercicio.nombre | uppercase }}
-                {{ejercicio.descripcion}}
+              <div class="modal-body text-white fondo-morado rounded">
+                <h1 class="text-center">{{ ejercicio.nombre | uppercase }}</h1>
+                <ul>
+                  <li>Descripción: {{ ejercicio.descripcion }}</li>
+                  <li>Duración: {{ ejercicio.duracion }} min</li>
+                  <li>Series: {{ ejercicio.series }}</li>
+                  <li>Repeticiones: {{ ejercicio.repeticiones }}</li>
+                  <li>Calorías quemadas: {{ ejercicio.calorias_quemadas }} aprox</li>
+                  <li>Músculos trabajados: {{ ejercicio.musculo }}</li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="row" *ngIf="rutina.length === 0">
+      <div class="col-md-12">
+        <h4 class="my-3">Aún no tienes ninguna rutina generada</h4>
+        <button class="btn" (click)="generarRutina()">Generar Rutina</button>
+      </div>
+    </div>
+
     <div class="col-md-7">
 
     </div>
 
   </div>
+</div>

@@ -1,4 +1,9 @@
 #backgroundImage {
   background-image: url('../../../assets/imgs/ejercicio.png');
   background-size: cover;
+  height: 100vh;
+}
+
+a {
+  cursor: pointer;
 }

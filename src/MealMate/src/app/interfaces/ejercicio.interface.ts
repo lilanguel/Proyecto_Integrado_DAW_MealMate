@@ -6,6 +6,6 @@ export interface Ejercicio {
   series: number;
   repeticiones: number;
   calorias_quemadas: number;
-  musuclo: string;
+  musculo: string;
   objetivo: string;
 }

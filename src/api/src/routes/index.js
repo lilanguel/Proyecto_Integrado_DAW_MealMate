@@ -130,7 +130,7 @@ router.put('/objetivo/:id', verificarToken, (req, res) => {
         });
 });
 
-router.put('/generar-rutina/:id', verificarToken, async (req, res) => {
+router.get('/generar-rutina/:id', verificarToken, async (req, res) => {
     try {
         const usuario = await User.findById(req.params.id);
         const idUsuario = req.params.id;
