@@ -2,20 +2,20 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { SigninComponent } from './components/signin/signin.component';
-import { MainComponent } from './components/main/main.component';
-
-import { AuthGuard } from './auth.guard';
-import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AuthGuard } from './helpers/auth.guard';
+import { TokenInterceptorService } from './interceptors/token-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ObjetivoComponent } from './components/objetivo/objetivo.component';
 import { ToastrModule } from 'ngx-toastr';
-import { RutinaComponent } from './components/rutina/rutina.component';
-import { DietaComponent } from './components/dieta/dieta.component';
+import { DietaComponent } from './views/dieta/dieta.component';
+import { SignupComponent } from './views/signup/signup.component';
+import { SigninComponent } from './views/signin/signin.component';
+import { MainComponent } from './views/main/main.component';
+import { ObjetivoComponent } from './views/objetivo/objetivo.component';
+import { RutinaComponent } from './views/rutina/rutina.component';
+import { SpinnerModule } from './shared/spinner/spinner.module';
+import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { DietaComponent } from './components/dieta/dieta.component';
     MainComponent,
     ObjetivoComponent,
     RutinaComponent,
-    DietaComponent
+    DietaComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,16 +35,22 @@ import { DietaComponent } from './components/dieta/dieta.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SpinnerModule,
   ],
   providers: [
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
-      multi: true
-    }
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SpinnerInterceptor,
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
