@@ -382,7 +382,27 @@ router.post('/recuperar-contrasena', async (req, res) => {
             from: process.env.MAIL_USER,
             to: email,
             subject: 'Recuperación de contraseña',
-            text: `Tu nueva contraseña de MealMate es: ${nuevaContrasena}`,
+            html: `<!DOCTYPE html>
+            <html>
+            <head>
+              <style>
+                body{
+                    background-color: #F6D7FB;
+                }
+              </style>
+            </head>
+            <body>            
+              <!-- Contenido principal -->
+              <main style="padding: 20px;">
+                <h1>Recuperación de Contraseña</h1>
+                <p>Estimado(a) ${usuario.nombre_usuario},</p>
+                <p>Recibimos una solicitud para recuperar la contraseña de tu cuenta de MealMate. A continuación, te proporcionamos tu nueva contraseña:</p>
+                <p><strong>Tu nueva contraseña es: ${nuevaContrasena}</strong></p>
+                <p>Te recomendamos iniciar sesión con tu nueva contraseña y cambiarla tan pronto como sea posible.</p>
+                <p>Si no solicitaste la recuperación de contraseña, por favor, ignora este correo electrónico.</p>
+              </main>
+            </body>
+            </html>`,
         };
 
         // Envía el correo
