@@ -52,6 +52,10 @@ input::placeholder {
   background-color: #EC9DF9;
 }
 
+.fondo-beige{
+  background-color: #F5F5DC;
+}
+
 .btn{
   font-size: 1.5rem !important;
   background-color: #C682DE !important;
@@ -72,4 +76,8 @@ input::placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+input:hover, select:hover{
+  border-color: #8A16C0;
 }

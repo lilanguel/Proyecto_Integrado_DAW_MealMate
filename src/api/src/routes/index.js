@@ -352,6 +352,12 @@ router.post('/recuperar-contrasena', async (req, res) => {
             email
         } = req.body;
 
+        if (email === null || email === '') {
+            return res.status(400).json({
+                message: 'Debe ingresar el correo'
+            });
+        }
+
         // Verificar si el correo existe en tu base de datos y obtener la contraseña asociada
         const usuario = await User.findOne({
             email: email

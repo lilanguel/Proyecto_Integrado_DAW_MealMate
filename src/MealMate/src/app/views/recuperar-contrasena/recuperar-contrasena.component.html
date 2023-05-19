@@ -1,0 +1,20 @@
+<div class="fondo-beige">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <form (ngSubmit)="enviarCorreo()" class="p-5 m-5 fondo-morado rounded">
+          <h1 class="titulo text-white">RECUPERACIÓN DE CONTRASEÑA</h1>
+          <div class="mb-3 px-2">
+            <label for="email" class="form-label text-white">Correo electrónico: </label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com"
+              [(ngModel)]="correoElectronico" required>
+          </div>
+          <button type="submit" class="btn text-white btn-outline-dark mx-2">Enviar Correo</button>
+        </form>
+      </div>
+      <div class="col text-center">
+        <img src="../../../assets/imgs/recuperar_contrasena.png" width="50%" alt="recuperar-contrasena">
+      </div>
+    </div>
+  </div>
+</div>

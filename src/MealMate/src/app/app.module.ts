@@ -16,6 +16,7 @@ import { ObjetivoComponent } from './views/objetivo/objetivo.component';
 import { RutinaComponent } from './views/rutina/rutina.component';
 import { SpinnerModule } from './shared/spinner/spinner.module';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
+import { RecuperarContrasenaComponent } from './views/recuperar-contrasena/recuperar-contrasena.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
     ObjetivoComponent,
     RutinaComponent,
     DietaComponent,
+    RecuperarContrasenaComponent,
   ],
   imports: [
     BrowserModule,
