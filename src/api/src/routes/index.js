@@ -346,4 +346,63 @@ router.post('/enviar-correo', async (req, res) => {
     }
 });
 
+router.post('/recuperar-contrasena', async (req, res) => {
+    try {
+        const {
+            email
+        } = req.body;
+
+        // Verificar si el correo existe en tu base de datos y obtener la contraseña asociada
+        const usuario = await User.findOne({
+            email: email
+        });
+
+        if (!usuario) {
+            return res.status(404).json({
+                message: 'Usuario no encontrado'
+            });
+        }
+
+        // Generar una nueva contraseña aleatoria
+        const nuevaContrasena = generarNuevaContrasena();
+
+        // Actualizar la contraseña en tu base de datos
+        await User.findByIdAndUpdate(usuario._id, {
+            password: nuevaContrasena
+        });
+
+        // Configurar los detalles del correo
+        const mailOptions = {
+            from: process.env.MAIL_USER,
+            to: email,
+            subject: 'Recuperación de contraseña',
+            text: `Tu nueva contraseña de MealMate es: ${nuevaContrasena}`,
+        };
+
+        // Envía el correo
+        await transporter.sendMail(mailOptions);
+
+        res.status(200).json({
+            message: 'Se ha enviado un correo con tu nueva contraseña'
+        });
+    } catch (error) {
+        console.error('Error al recuperar la contraseña:', error);
+        res.status(500).json({
+            message: 'Error al recuperar la contraseña'
+        });
+    }
+});
+
+// Función para generar una nueva contraseña aleatoria
+function generarNuevaContrasena() {
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let nuevaContrasena = '';
+
+    for (let i = 0; i < 8; i++) {
+        nuevaContrasena += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+
+    return nuevaContrasena;
+}
+
 module.exports = router

@@ -127,12 +127,31 @@ const userSchema = new Schema({
 
 userSchema.pre('save', function (next) {
     var user = this;
+
+    // Verificar si la contraseña ha sido modificada
     if (!user.isModified('password')) return next();
+
+    // Generar el salt y hashear la contraseña
     bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
         if (err) return next(err);
         bcrypt.hash(user.password, salt, function (err, hash) {
             if (err) return next(err);
             user.password = hash;
+            next();
+        });
+    });
+});
+
+userSchema.pre('findOneAndUpdate', function (next) {
+    var update = this.getUpdate();
+    if (!update || !update.password) return next();
+
+    // Generar el salt y hashear la contraseña actualizada
+    bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+        if (err) return next(err);
+        bcrypt.hash(update.password, salt, function (err, hash) {
+            if (err) return next(err);
+            update.password = hash;
             next();
         });
     });
