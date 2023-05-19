@@ -1,0 +1,5 @@
+#backgroundImage {
+  background-image: url('../../../assets/imgs/dieta.jpg');
+  background-size: cover;
+  height: 100vh;
+}

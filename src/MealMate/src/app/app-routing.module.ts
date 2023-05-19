@@ -10,6 +10,7 @@ import { ObjetivoComponent } from './views/objetivo/objetivo.component';
 import { RutinaComponent } from './views/rutina/rutina.component';
 import { SignupComponent } from './views/signup/signup.component';
 import { SigninComponent } from './views/signin/signin.component';
+import { DietaComponent } from './views/dieta/dieta.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,11 @@ const routes: Routes = [
   {
     path: 'signin',
     component: SigninComponent,
+  },
+  {
+    path: 'dieta',
+    component: DietaComponent,
+    canActivate: [AuthGuard],
   },
 ];
 

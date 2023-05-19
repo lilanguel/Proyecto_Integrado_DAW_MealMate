@@ -6,6 +6,7 @@ const {
 var bcrypt = require('bcryptjs');
 var SALT_WORK_FACTOR = 10;
 const Ejercicio = require('./ejercicio');
+const Comida = require('./comida');
 
 const userSchema = new Schema({
     nombre_usuario: {
@@ -76,6 +77,48 @@ const userSchema = new Schema({
         ejercicio: {
             type: Schema.Types.ObjectId,
             ref: 'Ejercicio'
+        }
+    }],
+    dieta_lunes: [{
+        comida: {
+            type: Schema.Types.ObjectId,
+            ref: 'Comida'
+        }
+    }],
+    dieta_martes: [{
+        comida: {
+            type: Schema.Types.ObjectId,
+            ref: 'Comida'
+        }
+    }],
+    dieta_miercoles: [{
+        comida: {
+            type: Schema.Types.ObjectId,
+            ref: 'Comida'
+        }
+    }],
+    dieta_jueves: [{
+        comida: {
+            type: Schema.Types.ObjectId,
+            ref: 'Comida'
+        }
+    }],
+    dieta_viernes: [{
+        comida: {
+            type: Schema.Types.ObjectId,
+            ref: 'Comida'
+        }
+    }],
+    dieta_sabado: [{
+        comida: {
+            type: Schema.Types.ObjectId,
+            ref: 'Comida'
+        }
+    }],
+    dieta_domingo: [{
+        comida: {
+            type: Schema.Types.ObjectId,
+            ref: 'Comida'
         }
     }],
 }, {

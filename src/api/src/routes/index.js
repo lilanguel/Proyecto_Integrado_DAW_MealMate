@@ -7,6 +7,7 @@ const router = Router()
 // Modelos
 const User = require('../models/user')
 const Ejercicio = require('../models/ejercicio')
+const Comida = require('../models/comida');
 
 // Middlewares
 const jwt = require('jsonwebtoken')
@@ -217,7 +218,35 @@ router.get('/users/:id', verificarToken, async (req, res) => {
             .populate({
                 path: 'rutina_viernes._id',
                 model: 'Ejercicio'
-            });
+            })
+            .populate({
+                path: 'dieta_lunes._id',
+                model: 'Comida'
+            })
+            .populate({
+                path: 'dieta_martes._id',
+                model: 'Comida'
+            })
+            .populate({
+                path: 'dieta_miercoles._id',
+                model: 'Comida'
+            })
+            .populate({
+                path: 'dieta_jueves._id',
+                model: 'Comida'
+            })
+            .populate({
+                path: 'dieta_viernes._id',
+                model: 'Comida'
+            })
+            .populate({
+                path: 'dieta_sabado._id',
+                model: 'Comida'
+            })
+            .populate({
+                path: 'dieta_domingo._id',
+                model: 'Comida'
+            })
 
         if (!user) {
             return res.status(404).send('User not found');

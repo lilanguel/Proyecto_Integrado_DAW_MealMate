@@ -48,6 +48,10 @@ input::placeholder {
   background-color: #F6D7FB;
 }
 
+.fondo-rosa-oscuro{
+  background-color: #EC9DF9;
+}
+
 .btn{
   font-size: 1.5rem !important;
   background-color: #C682DE !important;
