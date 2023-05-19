@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signin',
@@ -15,7 +16,8 @@ export class SigninComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {
     this.userForm = this.fb.group({
       email: ['', Validators.required],
@@ -30,8 +32,8 @@ export class SigninComponent {
         localStorage.setItem('token', res.token);
         this.router.navigate(['/main']);
       },
-      (err) =>{
-        console.log(err);
+      (err) => {
+        this.toastr.error('¡Las credenciales no son válidas!', 'Error');
         this.errorMessage = err.error;
       }
     );

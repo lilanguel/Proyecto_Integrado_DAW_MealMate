@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { environment } from '../environments/environment';
+import { User } from '../interfaces/user.interface';
 
 
 @Injectable({
@@ -17,7 +18,7 @@ export class AuthService {
     return this.http.post<any>(this.URL + '/signup', user);
   }
 
-  signIn(user: {}) {
+  signIn(user: User) {
     return this.http.post<any>(this.URL + '/signin', user);
   }
 
