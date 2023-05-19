@@ -10,12 +10,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SigninComponent {
   public errorMessage!: string;
-
-  user = {
-    email: '',
-    password: '',
-  };
-
   userForm: FormGroup;
 
   constructor(
@@ -30,7 +24,7 @@ export class SigninComponent {
   }
 
   signIn() {
-    this.authService.signIn(this.user).subscribe(
+    this.authService.signIn(this.userForm.value).subscribe(
       (res) => {
         console.log(res);
         localStorage.setItem('token', res.token);
