@@ -17,6 +17,7 @@ import { RutinaComponent } from './views/rutina/rutina.component';
 import { SpinnerModule } from './shared/spinner/spinner.module';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 import { RecuperarContrasenaComponent } from './views/recuperar-contrasena/recuperar-contrasena.component';
+import { EditarPerfilComponent } from './views/editar-perfil/editar-perfil.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { RecuperarContrasenaComponent } from './views/recuperar-contrasena/recup
     RutinaComponent,
     DietaComponent,
     RecuperarContrasenaComponent,
+    EditarPerfilComponent,
   ],
   imports: [
     BrowserModule,
