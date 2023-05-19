@@ -9,10 +9,13 @@ const User = require('../models/user')
 const Ejercicio = require('../models/ejercicio')
 const Comida = require('../models/comida');
 
-// Middlewares
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const lodash = require('lodash');
+
+const {
+    transporter
+} = require('../config/mailer');
 
 // Validators
 const {
@@ -309,6 +312,36 @@ router.get('/users/:id/rutina/:dia', verificarToken, async (req, res) => {
         console.error(error.message);
         res.status(500).json({
             message: 'Server Error'
+        });
+    }
+});
+
+router.post('/enviar-correo', async (req, res) => {
+    try {
+        const {
+            destinatario,
+            asunto,
+            mensaje
+        } = req.body;
+
+        // Configura los detalles del correo
+        const mailOptions = {
+            from: process.env.MAIL_USER,
+            to: destinatario,
+            subject: asunto,
+            text: mensaje,
+        };
+
+        // Envía el correo
+        await transporter.sendMail(mailOptions);
+
+        res.status(200).json({
+            message: 'Correo enviado correctamente'
+        });
+    } catch (error) {
+        console.error('Error al enviar el correo:', error);
+        res.status(500).json({
+            message: 'Error al enviar el correo'
         });
     }
 });
