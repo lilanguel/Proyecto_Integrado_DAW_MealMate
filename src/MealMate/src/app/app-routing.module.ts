@@ -12,6 +12,7 @@ import { SignupComponent } from './views/signup/signup.component';
 import { SigninComponent } from './views/signin/signin.component';
 import { DietaComponent } from './views/dieta/dieta.component';
 import { RecuperarContrasenaComponent } from './views/recuperar-contrasena/recuperar-contrasena.component';
+import { EditarPerfilComponent } from './views/editar-perfil/editar-perfil.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,11 @@ const routes: Routes = [
     component: DietaComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'editar-perfil',
+    component: EditarPerfilComponent,
+    canActivate: [AuthGuard],
+  }
 ];
 
 @NgModule({

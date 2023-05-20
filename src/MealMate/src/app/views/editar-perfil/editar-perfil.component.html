@@ -1,1 +1,67 @@
-<p>editar-perfil works!</p>
+<div class="row" id="fondo-editar-perfil">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <div class="my-5 px-5 py-3 bg-opacity-50 bg-dark text-white text-center" style="border-left: 4px solid #9028E1;">
+      <h1 class="titulo">EDITAR PERFIL</h1>
+      <form (submit)="editarPerfil()" [formGroup]="userForm" class="px-5 my-4">
+        <div class="form-group text-start m-4">
+          <label for="nombre_usuario">Nombre de usuario:</label>
+          <input id="nombre_usuario" type="text" formControlName="nombre_usuario" name="nombre_usuario"
+            class="form-control" placeholder="Escribe aquí tu nombre de usuario" required>
+          <div class="text-warning"
+            *ngIf="userForm.get('nombre_usuario')?.hasError('required') && userForm.get('nombre_usuario')?.touched">
+            <span>El nombre de usuario es obligatorio</span>
+          </div>
+        </div>
+        <div class="form-group text-start m-4">
+          <label for="email">Email:</label>
+          <input id="email" type="email" formControlName="email" name="email" class="form-control" placeholder="Email"
+            required>
+          <div class="text-warning"
+            *ngIf="userForm.get('email')?.hasError('required') && userForm.get('email')?.touched">
+            <span>El correo es obligatorio</span>
+          </div>
+        </div>
+        <div class="form-group text-start m-4">
+          <label for="sexo">Sexo:</label>
+          <select name="sexo" id="sexo" formControlName="sexo" class="form-select">
+            <option value="hombre" selected>Hombre</option>
+            <option value="mujer">Mujer</option>
+          </select>
+          <div class="text-warning" *ngIf="userForm.get('sexo')?.hasError('required') && userForm.get('sexo')?.touched">
+            <span>El sexo es obligatorio</span>
+          </div>
+        </div>
+        <div class="form-group text-start m-4">
+          <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+          <input id="fecha_nacimiento" type="date" formControlName="fecha_nacimiento" name="fecha_nacimiento"
+            class="form-control" required>
+          <div class="text-warning"
+            *ngIf="userForm.get('fecha_nacimiento')?.hasError('required') && userForm.get('fecha_nacimiento')?.touched">
+            <span>La fecha de nacimiento es obligatoria</span>
+          </div>
+        </div>
+        <div class="form-group text-start m-4">
+          <label for="peso">Peso:</label>
+          <input id="peso" type="number" name="peso" formControlName="peso" class="form-control"
+            placeholder="Escribe aquí tu peso" required>
+          <div class="text-warning" *ngIf="userForm.get('peso')?.hasError('required') && userForm.get('peso')?.touched">
+            <span>El peso obligatorio</span>
+          </div>
+        </div>
+        <div class="form-group text-start m-4">
+          <label for="altura">Altura:</label>
+          <input id="altura" type="number" name="altura" formControlName="altura" class="form-control"
+            placeholder="Escribe aquí tu altura" required>
+          <div class="text-warning"
+            *ngIf="userForm.get('altura')?.hasError('required') && userForm.get('altura')?.touched">
+            <span>La altura es obligatoria</span>
+          </div>
+        </div>
+        <div *ngIf="errorMessage" class="text-warning">{{ errorMessage }}</div>
+        <button type="submit" [disabled]="userForm.invalid" class="btn btn-outline-dark text-white">ENVIAR</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>

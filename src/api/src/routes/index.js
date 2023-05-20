@@ -431,4 +431,45 @@ function generarNuevaContrasena() {
     return nuevaContrasena;
 }
 
+router.put('/users/:id', verificarToken, async (req, res) => {
+    try {
+        const idUsuario = req.params.id;
+
+        const {
+            nombre_usuario,
+            email,
+            sexo,
+            fecha_nacimiento,
+            peso,
+            altura
+        } = req.body
+
+        // Comprobar si el usuario es correcto
+        if (idUsuario !== req.usuario._id) {
+            return res.status(401).json({
+                mensaje: 'No autorizado'
+            });
+        }
+
+        // Actualizar el usuario
+        await User.findByIdAndUpdate(idUsuario, {
+            nombre_usuario: nombre_usuario,
+            email: email,
+            sexo: sexo,
+            fecha_nacimiento: fecha_nacimiento,
+            peso: peso,
+            altura: altura
+        });
+
+        res.status(200).json({
+            message: 'Usuario actualizado correctamente'
+        });
+    } catch (error) {
+        console.error('Error al actualizar el usuario: ', error);
+        res.status(500).json({
+            message: 'Error al actualizar el usuario'
+        });
+    }
+})
+
 module.exports = router
