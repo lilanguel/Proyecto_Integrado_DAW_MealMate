@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/interfaces/user.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +19,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {
     this.userForm = this.fb.group({
       nombre_usuario: ['', [Validators.required]],
@@ -45,12 +47,17 @@ export class SignupComponent implements OnInit {
 
     this.authService.signUp(usuario).subscribe(
       (res) => {
-        console.log(res);
-        localStorage.setItem('token', res.token);
-        this.router.navigate(['/main']);
+        this.toastr.success(
+          'Se ha enviado un email a tu dirección para verificar la cuenta',
+          'Usuario registrado'
+        );
+        this.router.navigate(['/signin']);
       },
       (err) => {
-        console.log(err);
+        this.toastr.error(
+          'Comprueba los requisitos de los campos introducidos',
+          'Error'
+        );
         this.errorMessage = err.error.errors[0].msg;
       }
     );

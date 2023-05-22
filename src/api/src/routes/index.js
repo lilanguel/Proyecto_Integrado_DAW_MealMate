@@ -39,9 +39,46 @@ function enviarCorreoVerificacion(email, token) {
         to: email,
         subject: 'Verificación de correo electrónico',
         html: `
-        <p>Hola,</p>
-        <p>Por favor, haz clic en el siguiente enlace para verificar tu dirección de correo electrónico:</p>
-        <a href="http://localhost:3000/api/verificar?token=${token}">Verificar correo electrónico</a>
+        <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MealMate - Verificar correo electrónico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F4FF;
+            color: #4E3A58;
+        }
+        
+        h1 {
+            color: #663399;
+        }
+        
+        p {
+            margin-bottom: 10px;
+        }
+        
+        a {
+            color: #663399;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Verificar correo electrónico</h1>
+    <p>Estimado/a usuario de Mealmate,</p>
+    <p>Gracias por registrarte en MealMate. Por favor, haz clic en el siguiente enlace para verificar tu correo electrónico:</p>
+    <p><a href="http://localhost:3000/api/verificar?token=${token}">Verificar correo electrónico</a></p>
+    <p>Si no has solicitado esta verificación, puedes ignorar este mensaje.</p>
+    <p>¡Gracias!</p>
+    <p>El equipo de MealMate</p>
+</body>
+</html>
       `,
     };
 
