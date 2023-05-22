@@ -121,6 +121,14 @@ const userSchema = new Schema({
             ref: 'Comida'
         }
     }],
+    verificado: {
+        type: Boolean,
+        default: false
+    },
+    token_verificacion:{
+        type: String,
+        default: null
+    }
 }, {
     timestamps: true
 })

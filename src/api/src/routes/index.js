@@ -22,6 +22,70 @@ const {
     validateCreate
 } = require('../validators/users')
 
+function generarTokenVerificacion(email) {
+    const payload = {
+        email: email,
+    };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: '1d'
+    });
+    return token;
+}
+
+function enviarCorreoVerificacion(email, token) {
+    // Configurar los detalles del correo
+    const mailOptions = {
+        from: process.env.MAIL_USER,
+        to: email,
+        subject: 'Verificación de correo electrónico',
+        html: `
+        <p>Hola,</p>
+        <p>Por favor, haz clic en el siguiente enlace para verificar tu dirección de correo electrónico:</p>
+        <a href="http://localhost:3000/api/verificar?token=${token}">Verificar correo electrónico</a>
+      `,
+    };
+
+    // Envía el correo electrónico
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log('Error al enviar el correo electrónico:', error);
+        } else {
+            console.log('Correo electrónico enviado:', info.response);
+        }
+    });
+}
+router.get('/verificar', async (req, res) => {
+    const token = req.query.token; // Obtén el token de la URL
+
+    try {
+        // Verificar el token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const email = decoded.email;
+
+        // Actualizar el campo "verificado" en la base de datos
+        await User.updateOne({
+            email: email
+        }, {
+            $set: {
+                verificado: true
+            }
+        });
+
+        console.log('Campo verificado actualizado correctamente');
+        // Realiza las acciones adicionales si es necesario
+
+        res.status(200).json({
+            mensaje: 'Correo electrónico verificado correctamente'
+        });
+    } catch (error) {
+        console.error('Error al verificar el token:', error);
+        res.status(400).json({
+            mensaje: 'Token inválido o caducado'
+        });
+    }
+});
+
+
 router.post('/signup', validateCreate, async (req, res) => {
     const {
         nombre_usuario,
@@ -33,6 +97,8 @@ router.post('/signup', validateCreate, async (req, res) => {
         altura
     } = req.body
 
+    const token_verificacion = generarTokenVerificacion(email)
+
     const newUser = new User({
         nombre_usuario,
         email,
@@ -40,8 +106,11 @@ router.post('/signup', validateCreate, async (req, res) => {
         fecha_nacimiento,
         password,
         peso,
-        altura
+        altura,
+        token_verificacion
     })
+
+    enviarCorreoVerificacion(email, token_verificacion)
 
     await newUser.save();
 
@@ -70,6 +139,8 @@ router.post('/signin', async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, user.password)
 
     if (!passwordMatch) return res.status(401).send("La contraseña no es correcta")
+
+    if (!user.verificado) return res.status(401).send("El email aún no ha sido verificado")
 
     const token = jwt.sign({
         _id: user._id,
@@ -312,36 +383,6 @@ router.get('/users/:id/rutina/:dia', verificarToken, async (req, res) => {
         console.error(error.message);
         res.status(500).json({
             message: 'Server Error'
-        });
-    }
-});
-
-router.post('/enviar-correo', async (req, res) => {
-    try {
-        const {
-            destinatario,
-            asunto,
-            mensaje
-        } = req.body;
-
-        // Configura los detalles del correo
-        const mailOptions = {
-            from: process.env.MAIL_USER,
-            to: destinatario,
-            subject: asunto,
-            text: mensaje,
-        };
-
-        // Envía el correo
-        await transporter.sendMail(mailOptions);
-
-        res.status(200).json({
-            message: 'Correo enviado correctamente'
-        });
-    } catch (error) {
-        console.error('Error al enviar el correo:', error);
-        res.status(500).json({
-            message: 'Error al enviar el correo'
         });
     }
 });
