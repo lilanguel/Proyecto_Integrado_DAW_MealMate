@@ -15,11 +15,11 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   signUp(user: User) {
-    return this.http.post<any>(this.URL + '/signup', user);
+    return this.http.post<any>(this.URL + 'signup', user);
   }
 
   signIn(user: User) {
-    return this.http.post<any>(this.URL + '/signin', user);
+    return this.http.post<any>(this.URL + 'signin', user);
   }
 
   loggedIn() {

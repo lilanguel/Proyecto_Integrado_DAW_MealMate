@@ -11,6 +11,6 @@ export class RutinaService {
   constructor(private http: HttpClient) { }
 
   generarRutina(id: string) {
-    return this.http.get(`${this.apiUrl}/generar-rutina/${id}`);
+    return this.http.get(`${this.apiUrl}generar-rutina/${id}`);
   }
 }
