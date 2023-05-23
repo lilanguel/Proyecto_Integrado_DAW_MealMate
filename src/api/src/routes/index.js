@@ -156,8 +156,7 @@ router.post('/signup', validateCreate, async (req, res) => {
         fecha_nacimiento,
         password,
         peso,
-        altura,
-        token_verificacion
+        altura
     })
 
     // Envía un correo al usuario para verificar el email

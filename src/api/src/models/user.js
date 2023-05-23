@@ -124,10 +124,6 @@ const userSchema = new Schema({
     verificado: {
         type: Boolean,
         default: false
-    },
-    token_verificacion:{
-        type: String,
-        default: null
     }
 }, {
     timestamps: true
