@@ -22,6 +22,11 @@ const {
     validateCreate
 } = require('../validators/users')
 
+/**
+ * Función que genera un token de verificación con el email pasado como parámetro
+ * @param {String} email 
+ * @returns {String} 
+ */
 function generarTokenVerificacion(email) {
     const payload = {
         email: email,
@@ -32,6 +37,11 @@ function generarTokenVerificacion(email) {
     return token;
 }
 
+/**
+ * Función que envía un correo al email del usuario para verificar el email
+ * @param {String} email 
+ * @param {String} token 
+ */
 function enviarCorreoVerificacion(email, token) {
     // Configurar los detalles del correo
     const mailOptions = {
@@ -91,8 +101,10 @@ function enviarCorreoVerificacion(email, token) {
         }
     });
 }
+
+// Verificar el correo electrónico a través de un token
 router.get('/verificar', async (req, res) => {
-    const token = req.query.token; // Obtén el token de la URL
+    const token = req.query.token; // Token de la URL
 
     try {
         // Verificar el token
@@ -109,7 +121,6 @@ router.get('/verificar', async (req, res) => {
         });
 
         console.log('Campo verificado actualizado correctamente');
-        // Realiza las acciones adicionales si es necesario
 
         res.status(200).json({
             mensaje: 'Correo electrónico verificado correctamente'
@@ -122,7 +133,7 @@ router.get('/verificar', async (req, res) => {
     }
 });
 
-
+// Crea un nueva cuenta de usuario
 router.post('/signup', validateCreate, async (req, res) => {
     const {
         nombre_usuario,
@@ -132,10 +143,12 @@ router.post('/signup', validateCreate, async (req, res) => {
         password,
         peso,
         altura
-    } = req.body
+    } = req.body // Campos del usuario
 
+    // Generar token de verificación
     const token_verificacion = generarTokenVerificacion(email)
 
+    // Crea un nuevo usuario
     const newUser = new User({
         nombre_usuario,
         email,
@@ -147,10 +160,13 @@ router.post('/signup', validateCreate, async (req, res) => {
         token_verificacion
     })
 
+    // Envía un correo al usuario para verificar el email
     enviarCorreoVerificacion(email, token_verificacion)
 
+    // Lo guarda en la base de datos
     await newUser.save();
 
+    // Crea un token para iniciar sesión
     const token = jwt.sign({
         _id: newUser._id,
         role: newUser.role
@@ -161,24 +177,30 @@ router.post('/signup', validateCreate, async (req, res) => {
     })
 })
 
+// Valida el email y la contraseña de un usuario para iniciar sesión
 router.post('/signin', async (req, res) => {
     const {
         email,
         password
-    } = req.body
+    } = req.body // Email y contraseña del usuario
 
+    // Encuentra al usuario por el email
     const user = await User.findOne({
         email
     })
 
+    // Si el usuario no existe:
     if (!user) return res.status(401).send("El correo no existe")
 
+    // Si la contraseña no es la correcta:
     const passwordMatch = await bcrypt.compare(password, user.password)
 
     if (!passwordMatch) return res.status(401).send("La contraseña no es correcta")
 
+    // Si el usuario aún no ha sido verificado
     if (!user.verificado) return res.status(401).send("El email aún no ha sido verificado")
 
+    // Crea un token de inicio de sesión
     const token = jwt.sign({
         _id: user._id,
         role: user.role
@@ -189,35 +211,51 @@ router.post('/signin', async (req, res) => {
     })
 })
 
+/**
+ * Middleware para verificar el token de autorización.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ * @param {Function} next - Función para llamar al siguiente middleware o controlador.
+ */
 function verificarToken(req, res, next) {
+    // Comprueba si no se proporcionó un encabezado de autorización
     if (req.headers.authorization == null) {
         return res.status(401).json({
             mensaje: 'No autorizado'
         });
     }
-    const token = req.headers.authorization.split(' ')[1]
 
+    // Extrae el token de autorización del encabezado
+    const token = req.headers.authorization.split(' ')[1];
+
+    // Comprueba si no se proporcionó un token
     if (!token) {
         return res.status(401).json({
             mensaje: 'No autorizado'
         });
     }
 
+    // Verifica la validez del token utilizando la clave secreta
     jwt.verify(token, process.env.JWT_SECRET, (error, usuario) => {
+        // Comprueba si hay un error al verificar el token
         if (error) {
             return res.status(401).json({
                 mensaje: 'Token no válido'
             });
         }
 
+        // Almacena la información del usuario decodificada en el objeto de solicitud
         req.usuario = usuario;
+
+        // Llama al siguiente middleware o controlador
         next();
     });
 }
 
+// Actualiza el objetivo del usuario
 router.put('/objetivo/:id', verificarToken, (req, res) => {
-    const idUsuario = req.params.id;
-    const nuevoObjetivo = req.body.objetivo;
+    const idUsuario = req.params.id; // Id del usuario
+    const nuevoObjetivo = req.body.objetivo; // Nuevo objetivo del usuario
 
     // Comprobar si el usuario es correcto
     if (idUsuario !== req.usuario._id) {
@@ -242,10 +280,11 @@ router.put('/objetivo/:id', verificarToken, (req, res) => {
         });
 });
 
+// Generar una nueva rutina de ejercicios para el usuario
 router.get('/generar-rutina/:id', verificarToken, async (req, res) => {
     try {
-        const usuario = await User.findById(req.params.id);
-        const idUsuario = req.params.id;
+        const usuario = await User.findById(req.params.id); // Usuario en cuestión
+        const idUsuario = req.params.id; // Id del usuario
 
         // Comprobar si el usuario es correcto
         if (idUsuario !== req.usuario._id) {
@@ -253,28 +292,29 @@ router.get('/generar-rutina/:id', verificarToken, async (req, res) => {
                 mensaje: 'No autorizado'
             });
         }
-
+        // Comprobar si el usuario existe en la base de datos
         if (!usuario) {
             return res.status(404).json({
                 message: 'Usuario no encontrado'
             });
         }
 
+        // Obtener el objetivo del usuario
         const objetivo = usuario.objetivo;
 
-        // filtrar los ejercicios por el objetivo correspondiente
+        // Filtrar los ejercicios por el objetivo correspondiente
         const ejercicios = await Ejercicio.find({
             objetivo: objetivo
         });
 
-        // obtener un conjunto aleatorio de ejercicios de los que se han filtrado
+        // Obtener un conjunto aleatorio de ejercicios de los que se han filtrado
         const ejerciciosAleatorios1 = lodash.sampleSize(ejercicios, 4);
         const ejerciciosAleatorios2 = lodash.sampleSize(ejercicios, 4);
         const ejerciciosAleatorios3 = lodash.sampleSize(ejercicios, 4);
         const ejerciciosAleatorios4 = lodash.sampleSize(ejercicios, 4);
         const ejerciciosAleatorios5 = lodash.sampleSize(ejercicios, 4);
 
-        // añadir los ejercicios aleatorios a cada array de rutina correspondiente
+        // Añadir los ejercicios aleatorios a cada array de rutina correspondiente
         const rutina = {
             rutina_lunes: ejerciciosAleatorios1,
             rutina_martes: ejerciciosAleatorios2,
@@ -283,7 +323,7 @@ router.get('/generar-rutina/:id', verificarToken, async (req, res) => {
             rutina_viernes: ejerciciosAleatorios5
         };
 
-        // actualizar la rutina del usuario
+        // Actualizar la rutina del usuario
         await User.findByIdAndUpdate(usuario._id, rutina);
 
         res.status(200).json({
@@ -297,10 +337,10 @@ router.get('/generar-rutina/:id', verificarToken, async (req, res) => {
     }
 });
 
-// Endpoint para obtener los datos de un usuario por su id
+// Obtener los datos de un usuario por su id
 router.get('/users/:id', verificarToken, async (req, res) => {
     try {
-        const idUsuario = req.params.id;
+        const idUsuario = req.params.id; // Id del usuario
 
         // Comprobar si el usuario es correcto
         if (idUsuario !== req.usuario._id) {
@@ -309,6 +349,7 @@ router.get('/users/:id', verificarToken, async (req, res) => {
             });
         }
 
+        // Obtener el usuario
         const user = await User.findById(req.params.id)
             .populate({
                 path: 'rutina_lunes._id',
@@ -359,6 +400,7 @@ router.get('/users/:id', verificarToken, async (req, res) => {
                 model: 'Comida'
             })
 
+        // Comprobar si el usuario existe en la base de datos
         if (!user) {
             return res.status(404).send('User not found');
         }
@@ -370,9 +412,10 @@ router.get('/users/:id', verificarToken, async (req, res) => {
     }
 });
 
+// Obtener la rutina de ejercicios de un usuario por día especificado
 router.get('/users/:id/rutina/:dia', verificarToken, async (req, res) => {
     try {
-        const idUsuario = req.params.id;
+        const idUsuario = req.params.id; // Id del usuario
 
         // Comprobar si el usuario es correcto
         if (idUsuario !== req.usuario._id) {
@@ -381,18 +424,20 @@ router.get('/users/:id/rutina/:dia', verificarToken, async (req, res) => {
             });
         }
 
+        // Obtener el usuario y su rutina
         const user = await User.findById(req.params.id).populate({
             path: `rutina_${req.params.dia}._id`,
             model: 'Ejercicio'
         });
+        // Comprobar si el usuario existe en la base de datos
         if (!user) {
             return res.status(404).json({
                 message: 'User not found'
             });
         }
 
-        const dia = req.params.dia;
-        let rutina = [];
+        const dia = req.params.dia; // Dia de la semana
+        let rutina = []; // Rutina de ejercicios
 
         switch (dia) {
             case 'lunes':
@@ -424,23 +469,26 @@ router.get('/users/:id/rutina/:dia', verificarToken, async (req, res) => {
     }
 });
 
+// Recuperar contraseña del usuario
 router.post('/recuperar-contrasena', async (req, res) => {
     try {
         const {
             email
-        } = req.body;
+        } = req.body; // Email del usuario
 
+        // Comprobar si se ha introducido un email
         if (email === null || email === '') {
             return res.status(400).json({
                 message: 'Debe ingresar el correo'
             });
         }
 
-        // Verificar si el correo existe en tu base de datos y obtener la contraseña asociada
+        // Verificar si el correo existe en la base de datos y obtener la contraseña asociada
         const usuario = await User.findOne({
             email: email
         });
 
+        // Comprobar si el usuario existe en la base de datos
         if (!usuario) {
             return res.status(404).json({
                 message: 'Usuario no encontrado'
@@ -497,7 +545,10 @@ router.post('/recuperar-contrasena', async (req, res) => {
     }
 });
 
-// Función para generar una nueva contraseña aleatoria
+/**
+ * Función para generar una nueva contraseña aleatoria
+ * @returns {String} 
+ */
 function generarNuevaContrasena() {
     const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let nuevaContrasena = '';
@@ -509,9 +560,10 @@ function generarNuevaContrasena() {
     return nuevaContrasena;
 }
 
+// Actualizar los datos de un usuario
 router.put('/users/:id', verificarToken, async (req, res) => {
     try {
-        const idUsuario = req.params.id;
+        const idUsuario = req.params.id; // Id del usuario
 
         const {
             nombre_usuario,
@@ -520,7 +572,7 @@ router.put('/users/:id', verificarToken, async (req, res) => {
             fecha_nacimiento,
             peso,
             altura
-        } = req.body
+        } = req.body // Datos nuevos del usuario
 
         // Comprobar si el usuario es correcto
         if (idUsuario !== req.usuario._id) {
