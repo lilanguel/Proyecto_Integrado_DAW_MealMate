@@ -1,5 +1,5 @@
 #fondoCabecera {
-  background-image: url('assets/imgs/imagen_superior_objetivos.jpg');
+  background-image: url('../../../assets/imgs/imagen_superior_objetivos.jpg');
   background-size: cover;
 }
 
