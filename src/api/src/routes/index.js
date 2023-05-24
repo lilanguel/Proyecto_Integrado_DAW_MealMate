@@ -83,7 +83,7 @@ function enviarCorreoVerificacion(email, token) {
     <h1>Verificar correo electrónico</h1>
     <p>Estimado/a usuario de Mealmate,</p>
     <p>Gracias por registrarte en MealMate. Por favor, haz clic en el siguiente enlace para verificar tu correo electrónico:</p>
-    <p><a href="http://localhost:3000/api/verificar?token=${token}">Verificar correo electrónico</a></p>
+    <p><a href="https://mealmate-api.up.railway.app/api/verificar?token=${token}">Verificar correo electrónico</a></p>
     <p>Si no has solicitado esta verificación, puedes ignorar este mensaje.</p>
     <p>¡Gracias!</p>
     <p>El equipo de MealMate</p>
