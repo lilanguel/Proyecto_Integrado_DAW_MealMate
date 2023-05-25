@@ -2,3 +2,13 @@
   background-image: url('../../../assets/imgs/imagen_editar_perfil.PNG');
   background-size: cover;
 }
+
+a {
+  text-decoration: none;
+  transition: text-decoration 0.2s ease-in;
+  font-size: 1.5rem;
+}
+
+a:hover {
+  text-decoration: underline;
+}

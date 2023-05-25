@@ -19,7 +19,9 @@ const {
 
 // Validators
 const {
-    validateCreate
+    validateCreate,
+    validateEdit,
+    validateChangePassword
 } = require('../validators/users')
 
 /**
@@ -560,7 +562,7 @@ function generarNuevaContrasena() {
 }
 
 // Actualizar los datos de un usuario
-router.put('/users/:id', verificarToken, async (req, res) => {
+router.put('/users/:id', verificarToken, validateEdit, async (req, res) => {
     try {
         const idUsuario = req.params.id; // Id del usuario
 
@@ -600,5 +602,46 @@ router.put('/users/:id', verificarToken, async (req, res) => {
         });
     }
 })
+
+// Endpoint para cambiar la contraseña del usuario
+router.put('/users/:id/cambiar-password', verificarToken, validateChangePassword, async (req, res) => {
+    try {
+        const {
+            id
+        } = req.params;
+
+        const {
+            password
+        } = req.body;
+
+        // Comprobar si el usuario es correcto
+        if (id !== req.usuario._id) {
+            return res.status(401).json({
+                mensaje: 'No autorizado'
+            });
+        }
+
+        // Obtener el usuario de la base de datos
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({
+                error: 'Usuario no encontrado'
+            });
+        }
+
+        // Actualizar la contraseña del usuario en la base de datos
+        user.password = password;
+        await user.save();
+
+        return res.json({
+            message: 'Contraseña cambiada exitosamente'
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            error: 'Ha ocurrido un error en el servidor'
+        });
+    }
+});
 
 module.exports = router

@@ -1,102 +1,10 @@
 <!-- Spinner -->
 <app-spinner></app-spinner>
+
 <!-- Header -->
-<header style="background-color: #9028E1;" class="d-flex flex-wrap justify-content-center py-3 container-fluid">
-  <a href="main" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-    <img style="height: 50px;" src="assets/imgs/logo mealmate blanco.png" alt="logo_mealmate" class="mx-2">
-    <h1 class="m-0 text-shadow-3 text-white titulo">MealMate</h1>
-  </a>
-
-  <ng-container *ngIf="authService.loggedIn(); else loggedOut">
-    <div class="dropdown text-end">
-      <a href="#" class="d-block link-dark text-decoration-none text-white" data-bs-toggle="dropdown"
-        aria-expanded="false">
-        <i class="bi bi-person-circle titulo"></i>
-      </a>
-      <ul class="dropdown-menu text-small">
-        <li><a class="dropdown-item" href="main">Home</a></li>
-        <li><a class="dropdown-item" href="editar-perfil">Perfil</a></li>
-        <li><a class="dropdown-item" href="objetivo">Establecer objetivo</a></li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-        <li><a class="dropdown-item" style="cursor: pointer;" (click)="authService.logOut()">Cerrar sesión</a></li>
-      </ul>
-    </div>
-  </ng-container>
-
-  <ng-template #loggedOut>
-  </ng-template>
-</header>
+<app-header></app-header>
 
 <router-outlet></router-outlet>
 
 <!-- Footer -->
-<div style="background-color: #270C43;" class="text-white">
-  <footer class="pt-4 container">
-    <div class="row d-flex flex-row">
-      <div class="col-6 col-md-2 mb-3">
-        <h3>Explorar</h3>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="main" class="text-white">Home</a></li>
-          <li class="nav-item mb-2"><a href="#" class="text-white">Suscripciones</a></li>
-          <li class="nav-item mb-2"><a href="#" class="text-white">FAQs</a></li>
-          <li class="nav-item mb-2"><a href="#" class="text-white">Sobre Nosotros</a></li>
-        </ul>
-      </div>
-
-      <div class="col-6 col-md-2 mb-3">
-        <h3>Contacto</h3>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2">example@gmail.com</li>
-          <li class="nav-item mb-2">+34 XXX XX XX XX</li>
-          <li class="nav-item mb-2">C. Mamerto, Sevilla</li>
-          <li class="nav-item mb-2">9:00 - 21:00</li>
-        </ul>
-      </div>
-
-      <div class="col-6 col-md-2 mb-3">
-        <h3>Ayuda</h3>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="text-white">Términos y condiciones</a></li>
-          <li class="nav-item mb-2"><a href="#" class="text-white">Política de privacidad</a></li>
-          <li class="nav-item mb-2"><a href="#" class="text-white">Cookies</a></li>
-          <li class="nav-item mb-2"><a href="#" class="text-white">Cancelación y devolución</a></li>
-        </ul>
-      </div>
-
-      <div class="col-6 col-md-2 mb-3 ms-auto">
-        <img style="height: 160px;" src="assets/imgs/logo mealmate blanco.png" alt="logo_mealmate">
-      </div>
-    </div>
-
-    <div class="d-flex flex-column flex-sm-row justify-content-between pt-2 border-top">
-      <p>© 2023, MealMate. Todos los derechos reservados.</p>
-      <ul class="list-unstyled d-flex">
-        <li class="ms-3">
-          <a class="link-dark" href="http://github.com">
-            <i class="bi bi-github text-white"></i>
-          </a>
-        </li>
-
-        <li class="ms-3">
-          <a class="link-dark" href="http://facebook.com">
-            <i class="bi bi-facebook text-white"></i>
-          </a>
-        </li>
-
-        <li class="ms-3">
-          <a class="link-dark" href="http://instagram.com">
-            <i class="bi bi-instagram text-white"></i>
-          </a>
-        </li>
-
-        <li class="ms-3">
-          <a class="link-dark" href="http://twitter.com">
-            <i class="bi bi-twitter text-white"></i>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </footer>
-</div>
+<app-footer></app-footer>

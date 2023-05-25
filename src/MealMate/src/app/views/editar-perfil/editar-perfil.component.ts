@@ -73,6 +73,7 @@ export class EditarPerfilComponent implements OnInit {
           `No se ha podido actualizar el perfil correctamente`,
           'Error al editar perfil'
         );
+        this.errorMessage = err.error.errors[0].msg;
       }
     );
   }

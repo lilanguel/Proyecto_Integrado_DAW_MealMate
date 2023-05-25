@@ -18,6 +18,10 @@ import { SpinnerModule } from './shared/spinner/spinner.module';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 import { RecuperarContrasenaComponent } from './views/recuperar-contrasena/recuperar-contrasena.component';
 import { EditarPerfilComponent } from './views/editar-perfil/editar-perfil.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { RedesSocialesComponent } from './shared/redes-sociales/redes-sociales.component';
+import { CambiarContrasenaComponent } from './views/cambiar-contrasena/cambiar-contrasena.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,10 @@ import { EditarPerfilComponent } from './views/editar-perfil/editar-perfil.compo
     DietaComponent,
     RecuperarContrasenaComponent,
     EditarPerfilComponent,
+    HeaderComponent,
+    FooterComponent,
+    RedesSocialesComponent,
+    CambiarContrasenaComponent,
   ],
   imports: [
     BrowserModule,

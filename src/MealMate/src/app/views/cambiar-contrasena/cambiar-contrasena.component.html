@@ -1,0 +1,46 @@
+<div class="fondo-beige">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <form (submit)="cambiarContrasena()" [formGroup]="passwordForm" class="p-5 m-5 fondo-morado rounded">
+          <h1 class="titulo text-white">CAMBIO DE CONTRASEÑA</h1>
+
+          <div class="mb-3 px-2">
+            <label for="password" class="form-label text-white">Nueva contraseña: </label>
+            <input type="password" class="form-control" name="password" id="password" formControlName="password"
+              required>
+
+            <div class="text-warning"
+              *ngIf="passwordForm.get('password')?.hasError('required') && passwordForm.get('password')?.touched">
+              <span>Introduce tu nueva contraseña</span>
+            </div>
+
+            <label for="confirmPassword" class="form-label text-white">Repite la nueva contraseña: </label>
+            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
+              formControlName="confirmPassword" required>
+
+            <div class="text-warning"
+              *ngIf="passwordForm.get('confirmPassword')?.hasError('required') && passwordForm.get('confirmPassword')?.touched">
+              <span>Repite la nueva contraseña</span>
+            </div>
+          </div>
+
+          <div
+            *ngIf="passwordForm.hasError('passwordMismatch') && (passwordForm.get('confirmPassword')?.dirty || passwordForm.get('confirmPassword')?.touched)"
+            class="text-warning">
+            Las contraseñas deben coincidir
+          </div>
+
+          <div>
+            <span *ngIf="errorMessage" class="text-warning">{{errorMessage}}</span>
+          </div>
+
+          <button type="submit" class="btn text-white btn-outline-dark mx-2">Enviar</button>
+        </form>
+      </div>
+      <div class="col text-center">
+        <img src="assets/imgs/recuperar_contrasena.png" width="50%" alt="recuperar-contrasena">
+      </div>
+    </div>
+  </div>
+</div>

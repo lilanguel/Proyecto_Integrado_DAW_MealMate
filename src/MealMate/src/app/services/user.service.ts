@@ -23,4 +23,11 @@ export class UserService {
   updateUser(user: User) {
     return this.http.put(`${this.apiUrl}users/${user._id}`, user);
   }
+
+  cambiarContrasena(id: string, contrasenas: Object) {
+    return this.http.put(
+      `${this.apiUrl}users/${id}/cambiar-password`,
+      contrasenas
+    );
+  }
 }

@@ -13,6 +13,7 @@ import { SigninComponent } from './views/signin/signin.component';
 import { DietaComponent } from './views/dieta/dieta.component';
 import { RecuperarContrasenaComponent } from './views/recuperar-contrasena/recuperar-contrasena.component';
 import { EditarPerfilComponent } from './views/editar-perfil/editar-perfil.component';
+import { CambiarContrasenaComponent } from './views/cambiar-contrasena/cambiar-contrasena.component';
 
 const routes: Routes = [
   {
@@ -56,7 +57,12 @@ const routes: Routes = [
     path: 'editar-perfil',
     component: EditarPerfilComponent,
     canActivate: [AuthGuard],
-  }
+  },
+  {
+    path: 'cambiar-contraseña',
+    component: CambiarContrasenaComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
