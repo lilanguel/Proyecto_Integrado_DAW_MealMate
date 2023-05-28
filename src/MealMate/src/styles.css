@@ -56,6 +56,10 @@ input::placeholder {
   background-color: #F5F5DC;
 }
 
+.fondo-blanco{
+  background-color: white;
+}
+
 .btn{
   font-size: 1.5rem !important;
   background-color: #C682DE !important;

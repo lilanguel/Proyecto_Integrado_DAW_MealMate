@@ -3,3 +3,12 @@
   background-size: cover;
   height: 100vh;
 }
+
+#filaDieta td:hover {
+  cursor: pointer;
+  background-color: rgb(251, 194, 238);
+}
+
+ul {
+  list-style-type: none;
+}

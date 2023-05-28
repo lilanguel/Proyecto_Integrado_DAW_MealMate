@@ -79,47 +79,15 @@ const userSchema = new Schema({
             ref: 'Ejercicio'
         }
     }],
-    dieta_lunes: [{
-        comida: {
+    dietas: [{
+        dia: {
+            type: String,
+            required: true
+        },
+        dieta: [{
             type: Schema.Types.ObjectId,
             ref: 'Comida'
-        }
-    }],
-    dieta_martes: [{
-        comida: {
-            type: Schema.Types.ObjectId,
-            ref: 'Comida'
-        }
-    }],
-    dieta_miercoles: [{
-        comida: {
-            type: Schema.Types.ObjectId,
-            ref: 'Comida'
-        }
-    }],
-    dieta_jueves: [{
-        comida: {
-            type: Schema.Types.ObjectId,
-            ref: 'Comida'
-        }
-    }],
-    dieta_viernes: [{
-        comida: {
-            type: Schema.Types.ObjectId,
-            ref: 'Comida'
-        }
-    }],
-    dieta_sabado: [{
-        comida: {
-            type: Schema.Types.ObjectId,
-            ref: 'Comida'
-        }
-    }],
-    dieta_domingo: [{
-        comida: {
-            type: Schema.Types.ObjectId,
-            ref: 'Comida'
-        }
+        }]
     }],
     verificado: {
         type: Boolean,

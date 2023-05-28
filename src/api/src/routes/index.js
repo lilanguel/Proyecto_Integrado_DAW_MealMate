@@ -373,31 +373,7 @@ router.get('/users/:id', verificarToken, async (req, res) => {
                 model: 'Ejercicio'
             })
             .populate({
-                path: 'dieta_lunes._id',
-                model: 'Comida'
-            })
-            .populate({
-                path: 'dieta_martes._id',
-                model: 'Comida'
-            })
-            .populate({
-                path: 'dieta_miercoles._id',
-                model: 'Comida'
-            })
-            .populate({
-                path: 'dieta_jueves._id',
-                model: 'Comida'
-            })
-            .populate({
-                path: 'dieta_viernes._id',
-                model: 'Comida'
-            })
-            .populate({
-                path: 'dieta_sabado._id',
-                model: 'Comida'
-            })
-            .populate({
-                path: 'dieta_domingo._id',
+                path: 'dietas.dieta',
                 model: 'Comida'
             })
 
@@ -643,5 +619,142 @@ router.put('/users/:id/cambiar-password', verificarToken, validateChangePassword
         });
     }
 });
+
+// Endpoint para generar las dietas
+router.get('/generar-dietas/:id', async (req, res) => {
+    try {
+        const userId = req.params.id; // Id del usuario
+
+        // Obtener el usuario
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: 'Usuario no encontrado'
+            });
+        }
+
+        // Generar las dietas
+        const dietaSemana = await generarDietaSemanaPorObjetivo(user.objetivo);
+        console.log(dietaSemana)
+
+        // Guardar las dietas en el usuario
+        user.dietas = dietaSemana;
+
+        // Guardar el usuario actualizado en la base de datos
+        await user.save();
+
+        res.status(200).json({
+            message: 'Dietas generadas exitosamente'
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Ha ocurrido un error al generar las dietas'
+        });
+    }
+});
+
+// Función para generar las dietas de la semana
+async function generarDietaSemanaPorObjetivo(objetivo) {
+    const diasSemana = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+    const dietaSemana = [];
+
+    // Generar la dieta para cada día de la semana
+    for (const dia of diasSemana) {
+        const dietaDia = await generarDietaPorObjetivo(objetivo);
+        dietaSemana.push({
+            dia,
+            dieta: dietaDia
+        });
+    }
+
+    return dietaSemana;
+}
+
+// Función para generar una dieta aleatoria a partir de las comidas disponibles
+async function generarDietaPorObjetivo(objetivo) {
+    const dieta = [];
+
+    // Obtener una comida para desayunar
+    const comidaDesayuno = await obtenerComidaAleatoriaPorHorarioYObjetivo("desayuno", objetivo);
+    dieta.push(comidaDesayuno);
+
+    // Obtener una comida para almorzar
+    const comidaAlmuerzo = await obtenerComidaAleatoriaPorHorarioYObjetivo("almuerzo", objetivo);
+    dieta.push(comidaAlmuerzo);
+
+    // Obtener una comida para merendar
+    const comidaMerienda = await obtenerComidaAleatoriaPorHorarioYObjetivo("merienda", objetivo);
+    dieta.push(comidaMerienda);
+
+    // Obtener una comida para cenar
+    const comidaCena = await obtenerComidaAleatoriaPorHorarioYObjetivo("cena", objetivo);
+    dieta.push(comidaCena);
+
+    return dieta;
+}
+
+// Función para obtener una comida aleatoria de entre las comidas disponibles
+async function obtenerComidaAleatoriaPorHorarioYObjetivo(horario, objetivo) {
+    try {
+        const comidasHorario = await Comida.find({
+            horario,
+            objetivo,
+        });
+
+        const randomIndex = Math.floor(Math.random() * comidasHorario.length);
+        return comidasHorario[randomIndex];
+    } catch (error) {
+        console.error(error);
+        throw new Error('Ha ocurrido un error al buscar las comidas por horario');
+    }
+}
+
+// Ruta para buscar una comida por su ID
+router.get('/comidas/:id', async (req, res) => {
+    try {
+        const comida = await Comida.findById(req.params.id);
+
+        if (!comida) {
+            return res.status(404).json({
+                error: 'Comida no encontrada'
+            });
+        }
+
+        res.json(comida);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: 'Ha ocurrido un error al buscar la comida'
+        });
+    }
+});
+
+// GET /usuarios/:id/dietas
+router.get('/users/:id/dietas', async (req, res) => {
+    try {
+        const userId = req.params.id; // Id del usuario
+
+        // Obtener el usuario junto con sus dietas
+        const usuario = await User.findById(userId).populate('dietas.dieta');
+
+        if (!usuario) {
+            return res.status(404).json({
+                message: 'Usuario no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            dietas: usuario.dietas
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Ha ocurrido un error al obtener las dietas del usuario'
+        });
+    }
+});
+
 
 module.exports = router
