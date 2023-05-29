@@ -12,3 +12,12 @@
 ul {
   list-style-type: none;
 }
+
+.fondo-morado-difuminado {
+  background-color: rgba(192, 107, 232, 0.5);
+  height: 100vh;
+}
+
+table {
+  font-size: 1.2rem;
+}
