@@ -8,7 +8,7 @@
   <div class="carousel-inner">
     <div class="carousel-item active">
       <img src="assets/imgs/establecer objetivo.webp" class="d-block w-100" alt="Imagen establecer objetivo">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50">
+      <div class="carousel-caption bg-dark bg-opacity-50">
         <h1 class="titulo">ESTABLECE TU OBJETIVO</h1>
         <p>¡Estableciendo tu objetivo se generarán tus rutinas semanales de dieta y ejercicio!</p>
         <button type="button" routerLink="/objetivo" class="btn btn-outline-dark text-white">CLICK AQUÍ</button>
@@ -16,7 +16,7 @@
     </div>
     <div class="carousel-item">
       <img src="assets/imgs/dieta.jpg" class="d-block w-100" alt="Imagen ver dieta">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50">
+      <div class="carousel-caption bg-dark bg-opacity-50">
         <h1 class="titulo">VER TU DIETA</h1>
         <p>Tu dieta diaria para llevar a cabo una vida saludable</p>
         <button type="button" routerLink="/dieta" class="btn btn-outline-dark text-white">CLICK AQUÍ</button>
@@ -24,15 +24,20 @@
     </div>
     <div class="carousel-item">
       <img src="assets/imgs/rutina.PNG" class="d-block w-100" alt="Imagen ver rutina">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50">
+      <div class="carousel-caption bg-dark bg-opacity-50">
         <h1 class="titulo">VER TU RUTINA</h1>
         <p>Tu rutina de ejercicio para darle movimiento a tu vida</p>
-        <div class="row">
-          <div class="col px-1"><button type="button" routerLink="/rutina/lunes" class="btn btn-outline-dark text-white">LUNES</button></div>
-          <div class="col px-1"><button type="button" routerLink="/rutina/martes" class="btn btn-outline-dark text-white">MARTES</button></div>
-          <div class="col px-1"><button type="button" routerLink="/rutina/miercoles" class="btn btn-outline-dark text-white">MIÉRCOLES</button></div>
-          <div class="col px-1"><button type="button" routerLink="/rutina/jueves" class="btn btn-outline-dark text-white">JUEVES</button></div>
-          <div class="col px-1"><button type="button" routerLink="/rutina/viernes" class="btn btn-outline-dark text-white">VIERNES</button></div>
+        <div class="btn-group dropup">
+          <button type="button" class="btn dropdown-toggle btn-outline-dark text-white" data-bs-toggle="dropdown" aria-expanded="false">
+            SELECCIONA
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="rutina/lunes">Lunes</a></li>
+            <li><a class="dropdown-item" href="rutina/martes">Martes</a></li>
+            <li><a class="dropdown-item" href="rutina/miercoles">Miércoles</a></li>
+            <li><a class="dropdown-item" href="rutina/jueves">Jueves</a></li>
+            <li><a class="dropdown-item" href="rutina/viernes">Viernes</a></li>
+          </ul>
         </div>
       </div>
     </div>
