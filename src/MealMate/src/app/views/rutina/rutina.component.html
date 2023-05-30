@@ -1,10 +1,10 @@
 <div id="backgroundImage" class="row text-center text-white">
-  <div class="col-md-5 bg-black bg-opacity-50 p-5">
+  <div class="col-md-5 bg-black bg-opacity-50 p-5" style="height: 100vh;">
     <h1 class="m-2">TU RUTINA DEL {{ diaSemana | uppercase }}</h1>
     <p>Lleva tu entrenamiento al siguiente nivel</p>
 
-    <div class="row" *ngIf="rutina.length > 0">
-      <div *ngFor="let ejercicio of rutina; let i = index" class="col-md-6 text-start">
+    <div class="row" *ngIf="rutina.length > 0" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+      <div *ngFor="let ejercicio of rutina; let i = index" class="col-md-6 col-sm-12 text-start">
         <div class="bg-white p-4 my-4" style="border-top: #9028e1 5px solid;">
           <i class="fa-solid fa-dumbbell fa-2xl mb-4" style="color: #9028e1;"></i>
           <h4 class="text-dark">{{ ejercicio.nombre | uppercase }}</h4>
@@ -36,10 +36,7 @@
         <button class="btn btn-outline-dark text-white" (click)="generarRutina()">Generar Rutina</button>
       </div>
     </div>
-
-    <div class="col-md-7">
-
-    </div>
-
   </div>
+
+  <div class="col-md-7"></div>
 </div>
