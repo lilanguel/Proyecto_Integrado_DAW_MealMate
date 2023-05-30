@@ -1,19 +1,19 @@
 <div id="fondo_inicio_sesion" class="row">
-  <div class="col bg-opacity-50 bg-dark text-white text-center p-5">
+  <div class="col-lg-6 col-md-8 col-sm-10 mx-auto bg-opacity-50 bg-dark text-white text-center p-5">
     <h1 class="mt-5 titulo">INICIAR SESIÓN</h1>
     <form class="my-4 py-4" (submit)="signIn()" [formGroup]="userForm">
       <div class="form-group m-4 text-start">
         <label for="email">Email:</label>
-        <input type="email" id="email" formControlName="email" name="email"
-          class="form-control" placeholder="Escribe aquí tu email" required>
+        <input type="email" id="email" formControlName="email" name="email" class="form-control"
+          placeholder="Escribe aquí tu email" required>
         <div class="text-warning" *ngIf="userForm.get('email')?.hasError('required') && userForm.get('email')?.touched">
           <span>Introduce el email</span>
         </div>
       </div>
       <div class="form-group m-4 text-start">
         <label for="password">Contraseña:</label>
-        <input type="password" id="password" formControlName="password" name="password"
-          class="form-control" placeholder="Escribe aquí tu contraseña" required>
+        <input type="password" id="password" formControlName="password" name="password" class="form-control"
+          placeholder="Escribe aquí tu contraseña" required>
         <div class="text-warning"
           *ngIf="userForm.get('password')?.hasError('required') && userForm.get('password')?.touched">
           <span>Introduce la contraseña</span>
