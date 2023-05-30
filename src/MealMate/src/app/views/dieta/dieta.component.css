@@ -21,3 +21,7 @@ ul {
 table {
   font-size: 1.2rem;
 }
+
+td a:hover {
+  text-decoration: underline;
+}

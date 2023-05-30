@@ -14,27 +14,33 @@
             <ng-container *ngFor="let horario of ['desayuno', 'almuerzo', 'merienda', 'cena']; let i = index">
               <tr id="filaDieta" [ngClass]="{ 'fondo-rosa': i % 2 === 0, 'fondo-blanco': i % 2 !== 0 }">
                 <th>{{ horario | uppercase}}</th>
-                <td *ngFor="let dia of dietas" (click)="seleccionarComida(obtenerComidaPorHorario(dia.dieta, horario))">
-                  {{ obtenerComidaPorHorario(dia.dieta, horario)?.nombre | uppercase}}</td>
+                <td *ngFor="let dia of dietas; let j = index">
+                  <a data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + i + '-' + j">
+                    {{ obtenerComidaPorHorario(dia.dieta, horario)?.nombre | uppercase}}
+                  </a>
+                  <div class="modal fade" [id]="'modal' + i + '-' + j" tabindex="-1" aria-labelledby="modalComida"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-body text-white fondo-morado rounded">
+                          <h1 class="text-center">{{ obtenerComidaPorHorario(dia.dieta, horario)?.nombre | uppercase }}
+                          </h1>
+                          <ul>
+                            <li>Calorías: {{ obtenerComidaPorHorario(dia.dieta, horario)?.calorias }}</li>
+                            <li>Proteínas: {{ obtenerComidaPorHorario(dia.dieta, horario)?.proteinas }}</li>
+                            <li>Carbohidratos: {{ obtenerComidaPorHorario(dia.dieta, horario)?.carbohidratos }}</li>
+                            <li>Grasas: {{ obtenerComidaPorHorario(dia.dieta, horario)?.grasas }}</li>
+                            <li>Fibras: {{ obtenerComidaPorHorario(dia.dieta, horario)?.fibras }}</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
               </tr>
             </ng-container>
           </tbody>
         </table>
-      </div>
-      <div *ngIf="comidaSeleccionada" class="mt-3 p-4 rounded bg-white bg-opacity-75" style="width: fit-content;">
-        <h2 class="mb-3 col bg-white rounded shadow px-3">
-          <i class="fa-sharp fa-solid fa-apple-whole fa-bounce" style="color: #ff0505;"></i>
-          INFORMACIÓN NUTRICIONAL:
-          {{ comidaSeleccionada.nombre }}
-        </h2>
-        <ul class="bg-white rounded shadow px-3" style="width: fit-content;">
-          <li><strong>Nombre:</strong> {{ comidaSeleccionada.nombre }}</li>
-          <li><strong>Calorías:</strong> {{ comidaSeleccionada.calorias }}</li>
-          <li><strong>Proteínas:</strong> {{ comidaSeleccionada.proteinas }}</li>
-          <li><strong>Carbohidratos:</strong> {{ comidaSeleccionada.carbohidratos }}</li>
-          <li><strong>Grasas:</strong> {{ comidaSeleccionada.grasas }}</li>
-          <li><strong>Fibras:</strong> {{ comidaSeleccionada.fibras }}</li>
-        </ul>
       </div>
     </div>
     <div *ngIf="dietas.length === 0">

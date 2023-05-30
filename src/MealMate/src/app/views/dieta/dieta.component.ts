@@ -11,7 +11,6 @@ import { DietaService } from 'src/app/services/dieta.service';
 export class DietaComponent implements OnInit {
   user: any;
   dietas: any[] = [];
-  comidaSeleccionada: any = null;
 
   constructor(
     private authService: AuthService,
@@ -53,9 +52,5 @@ export class DietaComponent implements OnInit {
 
   obtenerComidaPorHorario(comidas: any[], horario: string) {
     return comidas.find((comida) => comida.horario === horario);
-  }
-
-  seleccionarComida(comida: any) {
-    this.comidaSeleccionada = comida;
   }
 }
