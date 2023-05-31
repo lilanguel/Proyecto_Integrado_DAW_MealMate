@@ -717,26 +717,6 @@ async function obtenerComidaAleatoriaPorHorarioYObjetivo(horario, objetivo) {
     }
 }
 
-// Ruta para buscar una comida por su ID
-router.get('/comidas/:id', async (req, res) => {
-    try {
-        const comida = await Comida.findById(req.params.id);
-
-        if (!comida) {
-            return res.status(404).json({
-                error: 'Comida no encontrada'
-            });
-        }
-
-        res.json(comida);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            error: 'Ha ocurrido un error al buscar la comida'
-        });
-    }
-});
-
 // Ruta para obtener las dieras de un usuario
 router.get('/users/:id/dietas', verificarToken, async (req, res) => {
     try {
