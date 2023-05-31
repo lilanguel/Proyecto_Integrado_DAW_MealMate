@@ -1,4 +1,4 @@
-#fondo-editar-perfil{
+#fondo-editar-perfil {
   background-image: url('../../../assets/imgs/imagen_editar_perfil.PNG');
   background-size: cover;
 }
@@ -11,4 +11,21 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .titulo {
+    font-size: 2rem;
+  }
+
+  input,
+  select,
+  label,
+  button {
+    font-size: 0.9rem;
+  }
+
+  a {
+    font-size: 1rem;
+  }
 }

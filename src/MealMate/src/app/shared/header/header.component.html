@@ -1,11 +1,12 @@
-<header style="background-color: #9028E1;" class="d-flex flex-wrap justify-content-center py-3 container-fluid">
-  <a href="main" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+<header style="background-color: #9028E1;"
+  class="d-flex flex-wrap justify-content-between align-items-center py-3 container-fluid">
+  <a href="main" class="d-flex align-items-center link-body-emphasis text-decoration-none">
     <img style="height: 50px;" src="assets/imgs/logo mealmate blanco.png" alt="logo_mealmate" class="mx-2">
     <h1 class="m-0 text-shadow-3 text-white titulo">MealMate</h1>
   </a>
 
   <ng-container *ngIf="authService.loggedIn(); else loggedOut">
-    <div class="dropdown text-end">
+    <div class="dropdown">
       <a href="#" class="d-block link-dark text-decoration-none text-white" data-bs-toggle="dropdown"
         aria-expanded="false">
         <i class="bi bi-person-circle titulo"></i>

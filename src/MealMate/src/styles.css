@@ -48,15 +48,15 @@ input::placeholder {
   background-color: #F6D7FB;
 }
 
-.fondo-rosa-oscuro{
+.fondo-rosa-oscuro {
   background-color: #EC9DF9;
 }
 
-.fondo-beige{
+.fondo-beige {
   background-color: #F5F5DC;
 }
 
-.fondo-blanco{
+.fondo-blanco {
   background-color: white;
 }
 
@@ -71,7 +71,7 @@ input::placeholder {
   transform: scale(1.1);
 }
 
-.overlay{
+.overlay {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -82,6 +82,7 @@ input::placeholder {
   justify-content: center;
 }
 
-input:hover, select:hover{
+input:hover,
+select:hover {
   border-color: #8A16C0;
 }

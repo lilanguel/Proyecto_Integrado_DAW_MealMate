@@ -38,10 +38,7 @@ a:hover {
   }
 
   input,
-  select {
-    font-size: 0.9rem;
-  }
-
+  select,
   button {
     font-size: 0.9rem;
   }

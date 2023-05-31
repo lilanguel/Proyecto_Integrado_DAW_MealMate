@@ -1,0 +1,9 @@
+@media (max-width: 992px) {
+  .titulo {
+    font-size: 2rem;
+  }
+
+  .btn{
+    width: 100% !important;
+  }
+}

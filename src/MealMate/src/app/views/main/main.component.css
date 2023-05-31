@@ -25,6 +25,10 @@ carousel-indicators {
     font-size: 1.8rem;
   }
 
+  li a {
+    font-size: 0.6rem;
+  }
+
   .carousel-caption p {
     font-size: 1rem;
     margin-bottom: 10px;

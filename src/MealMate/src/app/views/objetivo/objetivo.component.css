@@ -15,15 +15,11 @@
 
 .btn {
   font-size: 1.5rem !important;
-  background-color: #C682DE; width: 200px !important;
-}
-
-.col img {
+  background-color: #C682DE;
   width: 100%;
 }
 
-.col {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+.img-fluid {
+  width: 100%;
+  height: auto;
 }
