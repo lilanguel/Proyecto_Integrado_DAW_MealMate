@@ -38,5 +38,10 @@
     </div>
   </div>
 
-  <div class="col-md-7"></div>
+  <div class="col-md-7" *ngIf="rutina.length > 0">
+    <button class="btn bg-white bg-opacity-50 float-end mt-3 me-3 rounded" (click)="generarRutina()"
+      data-bs-toggle="tooltip" title="Generar nueva rutina">
+      <i class="bi bi-arrow-clockwise"></i>
+    </button>
+  </div>
 </div>

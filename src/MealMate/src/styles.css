@@ -62,8 +62,9 @@ input::placeholder {
 
 .btn{
   font-size: 1.5rem !important;
+  padding-right: 20px !important;
+  padding-left: 20px !important;
   background-color: #C682DE !important;
-  width: 200px !important;
   transition: transform 0.2s ease-in-out !important;
 }
 

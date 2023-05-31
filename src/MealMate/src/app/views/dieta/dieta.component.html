@@ -1,5 +1,9 @@
 <div id="backgroundImage">
   <div class="fondo-morado-difuminado">
+    <button *ngIf="dietas.length > 0" class="btn bg-white bg-opacity-50 float-end mt-3 me-3 rounded" (click)="generarDieta()"
+      data-bs-toggle="tooltip" title="Generar nueva dieta">
+      <i class="bi bi-arrow-clockwise"></i>
+    </button>
     <div class="container text-center">
       <h1 class="titulo text-white bg-dark bg-opacity-50 mx-5 text-center mb-5 py-2">TU DIETA</h1>
       <div class="table-responsive">
