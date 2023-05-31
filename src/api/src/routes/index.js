@@ -621,9 +621,16 @@ router.put('/users/:id/cambiar-password', verificarToken, validateChangePassword
 });
 
 // Endpoint para generar las dietas
-router.get('/generar-dietas/:id', async (req, res) => {
+router.get('/generar-dietas/:id', verificarToken, async (req, res) => {
     try {
         const userId = req.params.id; // Id del usuario
+
+        // Comprobar si el usuario es correcto
+        if (userId !== req.usuario._id) {
+            return res.status(401).json({
+                mensaje: 'No autorizado'
+            });
+        }
 
         // Obtener el usuario
         const user = await User.findById(userId);
@@ -636,7 +643,6 @@ router.get('/generar-dietas/:id', async (req, res) => {
 
         // Generar las dietas
         const dietaSemana = await generarDietaSemanaPorObjetivo(user.objetivo);
-        console.log(dietaSemana)
 
         // Guardar las dietas en el usuario
         user.dietas = dietaSemana;
@@ -731,10 +737,17 @@ router.get('/comidas/:id', async (req, res) => {
     }
 });
 
-// GET /usuarios/:id/dietas
-router.get('/users/:id/dietas', async (req, res) => {
+// Ruta para obtener las dieras de un usuario
+router.get('/users/:id/dietas', verificarToken, async (req, res) => {
     try {
         const userId = req.params.id; // Id del usuario
+
+        // Comprobar si el usuario es correcto
+        if (userId !== req.usuario._id) {
+            return res.status(401).json({
+                mensaje: 'No autorizado'
+            });
+        }
 
         // Obtener el usuario junto con sus dietas
         const usuario = await User.findById(userId).populate('dietas.dieta');
