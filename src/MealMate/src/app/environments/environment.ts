@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://mealmate.up.railway.app/api',
+  apiUrl: 'https://mealmate.up.railway.app/api/',
 };
