@@ -97,6 +97,7 @@ const userSchema = new Schema({
     timestamps: true
 })
 
+// Hasheo de contraseña al guardar un usuario
 userSchema.pre('save', function (next) {
     var user = this;
 
@@ -114,6 +115,7 @@ userSchema.pre('save', function (next) {
     });
 });
 
+// Hasheo de contraseña al editar un usuario
 userSchema.pre('findOneAndUpdate', function (next) {
     var update = this.getUpdate();
     if (!update || !update.password) return next();

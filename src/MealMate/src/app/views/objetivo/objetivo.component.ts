@@ -20,17 +20,25 @@ export class ObjetivoComponent {
   ) {}
 
   ngOnInit(): void {
+    // Obtiene el usuario actual del servicio de autenticación
     this.user = this.authService.getUser();
   }
 
   seleccionarObjetivo(opcion: string) {
+    // Llama al método de selección de objetivo del servicio de objetivos
     this.objetivoService.seleccionarObjetivo(this.user, opcion).subscribe(
       (res) => {
-        this.toastr.success(`¡${opcion} es una muy buena opción!`,'Objetivo seleccionado');
+        this.toastr.success(
+          `¡${opcion} es una muy buena opción!`,
+          'Objetivo seleccionado'
+        );
         this.router.navigate(['/main']);
       },
       (err) => {
-        this.toastr.error(`No se ha podido establacer el objetivo con éxito`,'Error');
+        this.toastr.error(
+          `No se ha podido establecer el objetivo con éxito`,
+          'Error'
+        );
       }
     );
   }

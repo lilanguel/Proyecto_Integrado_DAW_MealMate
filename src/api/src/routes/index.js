@@ -12,6 +12,7 @@ const Comida = require('../models/comida');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const lodash = require('lodash');
+const path = require('path');
 
 const {
     transporter
@@ -33,9 +34,7 @@ function generarTokenVerificacion(email) {
     const payload = {
         email: email,
     };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: '1d'
-    });
+    const token = jwt.sign(payload, process.env.JWT_SECRET);
     return token;
 }
 
@@ -85,7 +84,7 @@ function enviarCorreoVerificacion(email, token) {
     <h1>Verificar correo electrónico</h1>
     <p>Estimado/a usuario de Mealmate,</p>
     <p>Gracias por registrarte en MealMate. Por favor, haz clic en el siguiente enlace para verificar tu correo electrónico:</p>
-    <p><a href="https://mealmate-api.up.railway.app/api/verificar?token=${token}">Verificar correo electrónico</a></p>
+    <p><a href="https://mealmate.up.railway.app/api/verificar?token=${token}">Verificar correo electrónico</a></p>
     <p>Si no has solicitado esta verificación, puedes ignorar este mensaje.</p>
     <p>¡Gracias!</p>
     <p>El equipo de MealMate</p>
@@ -122,16 +121,9 @@ router.get('/verificar', async (req, res) => {
             }
         });
 
-        console.log('Campo verificado actualizado correctamente');
-
-        res.status(200).json({
-            mensaje: 'Correo electrónico verificado correctamente'
-        });
+        res.render(path.join(__dirname, '../views/verificacion_correcta/verificacion.ejs'));
     } catch (error) {
-        console.error('Error al verificar el token:', error);
-        res.status(400).json({
-            mensaje: 'Token inválido o caducado'
-        });
+        res.render(path.join(__dirname, '../views/verificacion_incorrecta/verificacion.ejs'));
     }
 });
 
@@ -331,7 +323,6 @@ router.get('/generar-rutina/:id', verificarToken, async (req, res) => {
             message: 'Rutina generada con éxito'
         });
     } catch (error) {
-        console.error(error);
         res.status(500).json({
             message: 'Ha ocurrido un error al generar la rutina'
         });
@@ -384,7 +375,6 @@ router.get('/users/:id', verificarToken, async (req, res) => {
 
         res.send(user);
     } catch (err) {
-        console.error(err);
         res.status(500).send('Server Error');
     }
 });
@@ -439,7 +429,6 @@ router.get('/users/:id/rutina/:dia', verificarToken, async (req, res) => {
         }
         res.json(rutina);
     } catch (error) {
-        console.error(error.message);
         res.status(500).json({
             message: 'Server Error'
         });
@@ -515,7 +504,6 @@ router.post('/recuperar-contrasena', async (req, res) => {
             message: 'Se ha enviado un correo con tu nueva contraseña'
         });
     } catch (error) {
-        console.error('Error al recuperar la contraseña:', error);
         res.status(500).json({
             message: 'Error al recuperar la contraseña'
         });
@@ -572,7 +560,6 @@ router.put('/users/:id', verificarToken, validateEdit, async (req, res) => {
             message: 'Usuario actualizado correctamente'
         });
     } catch (error) {
-        console.error('Error al actualizar el usuario: ', error);
         res.status(500).json({
             message: 'Error al actualizar el usuario'
         });
@@ -613,7 +600,6 @@ router.put('/users/:id/cambiar-password', verificarToken, validateChangePassword
             message: 'Contraseña cambiada exitosamente'
         });
     } catch (error) {
-        console.error(error);
         return res.status(500).json({
             error: 'Ha ocurrido un error en el servidor'
         });
@@ -654,7 +640,6 @@ router.get('/generar-dietas/:id', verificarToken, async (req, res) => {
             message: 'Dietas generadas exitosamente'
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             message: 'Ha ocurrido un error al generar las dietas'
         });
@@ -712,7 +697,6 @@ async function obtenerComidaAleatoriaPorHorarioYObjetivo(horario, objetivo) {
         const randomIndex = Math.floor(Math.random() * comidasHorario.length);
         return comidasHorario[randomIndex];
     } catch (error) {
-        console.error(error);
         throw new Error('Ha ocurrido un error al buscar las comidas por horario');
     }
 }
@@ -742,7 +726,6 @@ router.get('/users/:id/dietas', verificarToken, async (req, res) => {
             dietas: usuario.dietas
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             message: 'Ha ocurrido un error al obtener las dietas del usuario'
         });

@@ -22,7 +22,9 @@ export class DietaComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    // Obtiene el usuario actual del servicio de autenticación
     this.user = this.authService.getUser();
+    // Obtiene las dietas del usuario
     this.obtenerDietas();
   }
 
@@ -37,6 +39,7 @@ export class DietaComponent implements OnInit, AfterViewInit {
   }
 
   generarDieta() {
+    // Muestra un diálogo de confirmación para generar una nueva dieta
     Swal.fire({
       title: 'Generar dieta',
       text: '¿Estás seguro de que quieres generar una nueva tabla de dieta semanal?',
@@ -46,9 +49,10 @@ export class DietaComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'Rechazar',
     }).then((result) => {
       if (result.isConfirmed) {
+        // Realiza una solicitud para generar una nueva dieta
         this.dietaService.generarDieta(this.user).subscribe(
           (res) => {
-            location.reload();
+            location.reload(); // Recarga la página después de generar la dieta
             this.toastr.success(
               `¡Tu dieta se ha generado con éxito!`,
               'Dieta generada'
@@ -66,10 +70,10 @@ export class DietaComponent implements OnInit, AfterViewInit {
   }
 
   obtenerDietas() {
+    // Obtiene las dietas del usuario
     this.dietaService.obtenerDietas(this.user).subscribe(
       (response: any) => {
         this.dietas = response.dietas;
-        console.log(this.dietas);
       },
       (error) => {
         console.log(error);
@@ -78,6 +82,7 @@ export class DietaComponent implements OnInit, AfterViewInit {
   }
 
   obtenerComidaPorHorario(comidas: any[], horario: string) {
+    // Obtiene la comida correspondiente a un horario específico en la lista de comidas
     return comidas.find((comida) => comida.horario === horario);
   }
 }

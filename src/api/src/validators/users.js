@@ -6,6 +6,7 @@ const {
 } = require('../helpers/validateHelper')
 const User = require('../models/user')
 
+// Validación de creación de un usuario
 const validateCreate = [
     check('nombre_usuario')
     .exists()
@@ -98,6 +99,7 @@ const validateCreate = [
     }
 ]
 
+// Validación de edición de un usuario
 const validateEdit = [
     check('nombre_usuario')
     .optional() // Permite que el campo sea opcional en la edición
@@ -186,6 +188,7 @@ const validateEdit = [
     }
 ]
 
+// Validación de cambio de contraseña de un usuario
 const validateChangePassword = [
     check('password')
     .notEmpty()

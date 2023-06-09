@@ -18,6 +18,7 @@ export class RecuperarContrasenaComponent {
   ) {}
 
   enviarCorreo() {
+    // Llama al método de recuperación de contraseña del servicio de correo
     this.mailService.recuperarContraseña(this.correoElectronico).subscribe(
       (response) => {
         this.toastr.info(

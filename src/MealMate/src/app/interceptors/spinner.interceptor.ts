@@ -17,8 +17,15 @@ export class SpinnerInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    // Muestra el spinner o indicador de carga utilizando el servicio "SpinnerService"
     this.spinnerService.show();
 
-    return next.handle(req).pipe(finalize(() => this.spinnerService.hide()));
+    // Intercepta la solicitud HTTP y pasa al siguiente interceptor en la cadena de interceptores
+    // Retorna la respuesta observable de la solicitud HTTP
+    return next.handle(req).pipe(
+      // Al completarse la solicitud, se ejecuta la función "finalize" del operador "pipe"
+      // Oculta el spinner o indicador de carga utilizando el servicio "SpinnerService"
+      finalize(() => this.spinnerService.hide())
+    );
   }
 }

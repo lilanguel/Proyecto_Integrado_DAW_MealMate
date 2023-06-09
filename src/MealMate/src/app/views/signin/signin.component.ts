@@ -19,6 +19,7 @@ export class SigninComponent {
     private fb: FormBuilder,
     private toastr: ToastrService
   ) {
+    // Crea un formulario reactivo para el inicio de sesión con validaciones
     this.userForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -26,13 +27,16 @@ export class SigninComponent {
   }
 
   signIn() {
+    // Realiza el inicio de sesión utilizando el servicio de autenticación
     this.authService.signIn(this.userForm.value).subscribe(
       (res) => {
-        console.log(res);
+        // Almacena el token de acceso en el almacenamiento local (localStorage)
         localStorage.setItem('token', res.token);
+        // Redirecciona al componente 'main'
         this.router.navigate(['/main']);
       },
       (err) => {
+        // Muestra un mensaje de error utilizando Toastr en caso de credenciales inválidas
         this.toastr.error('¡Las credenciales no son válidas!', 'Error');
         this.errorMessage = err.error;
       }

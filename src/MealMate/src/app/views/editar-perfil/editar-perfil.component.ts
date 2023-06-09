@@ -23,6 +23,7 @@ export class EditarPerfilComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router
   ) {
+    // Inicializa el formulario de edición de perfil
     this.userForm = this.fb.group({
       nombre_usuario: ['', [Validators.required]],
       email: ['', Validators.required],
@@ -34,8 +35,10 @@ export class EditarPerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Obtiene el usuario actual del servicio de autenticación
     this.user = this.authService.getUser();
 
+    // Obtiene los datos del usuario y establece los valores en el formulario
     this.userService.getUser(this.user).subscribe((data) => {
       this.userForm.setValue({
         nombre_usuario: data.nombre_usuario,
@@ -49,6 +52,7 @@ export class EditarPerfilComponent implements OnInit {
   }
 
   editarPerfil() {
+    // Crea un objeto usuario con los datos del formulario
     const usuario: User = {
       _id: this.user,
       nombre_usuario: this.userForm.value.nombre_usuario,
@@ -60,6 +64,7 @@ export class EditarPerfilComponent implements OnInit {
       altura: this.userForm.value.altura,
     };
 
+    // Realiza una solicitud para actualizar el perfil del usuario
     this.userService.updateUser(usuario).subscribe(
       (res) => {
         this.toastr.success(

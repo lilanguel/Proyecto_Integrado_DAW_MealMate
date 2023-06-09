@@ -27,11 +27,13 @@ export class RutinaComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
+    // Obtiene el parámetro 'dia' de la ruta
     this.route.params.subscribe((params) => {
       this.diaSemana = params['dia'];
       this.user = this.authService.getUser();
     });
 
+    // Obtiene la rutina del usuario para el día de la semana actual
     this.userService
       .getRutina(this.user, this.diaSemana)
       .subscribe((res: any) => {
@@ -52,6 +54,7 @@ export class RutinaComponent implements OnInit, AfterViewInit {
   }
 
   generarRutina() {
+    // Muestra una confirmación utilizando SweetAlert2 para generar una nueva rutina semanal
     Swal.fire({
       title: 'Generar rutina',
       text: '¿Estás seguro de que quieres generar una nueva rutina semanal?',
@@ -61,6 +64,7 @@ export class RutinaComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'Rechazar',
     }).then((result) => {
       if (result.isConfirmed) {
+        // Llama al método de generación de rutina del servicio de rutina
         this.rutinaService.generarRutina(this.user).subscribe(
           (respuesta) => {
             this.toastr.success(

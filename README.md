@@ -30,26 +30,26 @@ Este proyecto trabaja con un Frontend en el que se ha usado el framework Angular
 
 La estructura del repositorio es la siguiente:
 
-├───docs
-└───src
-    ├───api
-    │   ├───.adminbro
-    │   └───src
-    │       ├───helpers
-    │       ├───models
-    │       ├───public
-    │       ├───routes
-    │       └───validators
-    └───MealMate
-        ├───.vscode
-        └───src
-            ├───app
-            │   ├───components
-            │   │   ├───main
-            │   │   ├───signin
-            │   │   └───signup
-            │   └───services
-            └───assets
-                ├───fonts
-                ├───icons
-                └───imgs
+- docs
+- src
+  - api
+    - .adminbro
+    - src
+      - helpers
+      - models
+      - public
+      - routes
+      - validators
+  - MealMate
+    - .vscode
+    - src
+      - app
+        - components
+          - main
+          - signin
+          - signup
+        - services
+      - assets
+        - fonts
+        - icons
+        - imgs

@@ -11,7 +11,10 @@ export class MailService {
   constructor(private http: HttpClient) {}
 
   recuperarContraseña(email: string) {
-    const data = {email}
+    // Crea un objeto "data" que contiene la dirección de correo electrónico
+    const data = { email };
+
+    // Realiza una solicitud HTTP POST al servidor para recuperar la contraseña utilizando la dirección de correo electrónico proporcionada
     return this.http.post(`${this.apiUrl}recuperar-contrasena`, data);
   }
 }

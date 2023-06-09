@@ -28,6 +28,7 @@ export class CambiarContrasenaComponent implements OnInit {
     private userService: UserService,
     private fb: FormBuilder
   ) {
+    // Inicializa el formulario de cambio de contraseña
     this.passwordForm = this.fb.group(
       {
         password: ['', Validators.required],
@@ -38,14 +39,17 @@ export class CambiarContrasenaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Obtiene el usuario actual del servicio de autenticación
     this.user = this.authService.getUser();
   }
 
   cambiarContrasena() {
+    // Realiza una solicitud para cambiar la contraseña del usuario actual
     this.userService
       .cambiarContrasena(this.user, this.passwordForm.value)
       .subscribe(
         (res) => {
+          // La contraseña se cambió exitosamente, muestra un mensaje de éxito y redirige al usuario a la página principal
           this.toastr.success(
             'Se ha actualizado la contraseña correctamente',
             'Contraseña cambiada'
@@ -53,6 +57,7 @@ export class CambiarContrasenaComponent implements OnInit {
           this.router.navigate(['/main']);
         },
         (err) => {
+          // Se produjo un error al cambiar la contraseña, muestra un mensaje de error y establece el mensaje de error personalizado
           this.toastr.error(
             '¡Ha habido un error al cambiar las contraseñas!',
             'Error'
@@ -65,6 +70,7 @@ export class CambiarContrasenaComponent implements OnInit {
   passwordMatchValidator: ValidatorFn = (
     control: AbstractControl
   ): { [key: string]: any } | null => {
+    // Validador personalizado para verificar si las contraseñas coinciden
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
 
@@ -73,9 +79,11 @@ export class CambiarContrasenaComponent implements OnInit {
       confirmPassword &&
       password.value !== confirmPassword.value
     ) {
+      // Si las contraseñas no coinciden, se devuelve un objeto con la clave 'passwordMismatch' para indicar el error
       return { passwordMismatch: true };
     }
 
+    // Si las contraseñas coinciden, se devuelve null para indicar que no hay errores
     return null;
   };
 }

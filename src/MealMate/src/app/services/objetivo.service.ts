@@ -11,8 +11,9 @@ export class ObjetivoService {
   constructor(private http: HttpClient) {}
 
   seleccionarObjetivo(id: number, objetivo: string) {
+    // Realiza una solicitud HTTP PUT al servidor para seleccionar un objetivo para un ID específico
     return this.http.put(`${this.apiUrl}objetivo/${id}`, {
-      'objetivo': objetivo
+      objetivo: objetivo,
     });
   }
 }

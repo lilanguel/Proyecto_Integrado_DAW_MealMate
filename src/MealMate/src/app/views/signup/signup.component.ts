@@ -22,6 +22,7 @@ export class SignupComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService
   ) {
+    // Crea un formulario reactivo para el registro de usuarios con validaciones
     this.userForm = this.fb.group({
       nombre_usuario: ['', [Validators.required]],
       email: ['', Validators.required],
@@ -34,6 +35,7 @@ export class SignupComponent implements OnInit {
   }
 
   signUp() {
+    // Construye un objeto User con los valores del formulario
     const usuario: User = {
       _id: '',
       nombre_usuario: this.userForm.value.nombre_usuario,
@@ -45,8 +47,10 @@ export class SignupComponent implements OnInit {
       altura: this.userForm.value.altura,
     };
 
+    // Llama al método signUp del servicio de autenticación para registrar al usuario
     this.authService.signUp(usuario).subscribe(
       (res) => {
+        // Muestra un mensaje de éxito y redirecciona al componente 'signin'
         this.toastr.success(
           'Se ha enviado un email a tu dirección para verificar la cuenta',
           'Usuario registrado'
@@ -54,6 +58,7 @@ export class SignupComponent implements OnInit {
         this.router.navigate(['/signin']);
       },
       (err) => {
+        // Muestra un mensaje de error y asigna el mensaje de error específico al atributo errorMessage
         this.toastr.error(
           'Comprueba los requisitos de los campos introducidos',
           'Error'
