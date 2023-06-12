@@ -35,20 +35,40 @@ La estructura del repositorio es la siguiente:
   - api
     - .adminbro
     - src
+      - config
       - helpers
       - models
       - public
+        - imgs
       - routes
       - validators
+      - views
+        - verificacion_correcta
+        - verificacion_incorrecta
   - MealMate
     - .vscode
     - src
       - app
-        - components
+        - environments
+        - helpers
+        - interceptors
+        - interfaces
+        - services
+        - shared
+          - footer
+          - header
+          - redes-sociales
+          - spinner
+        - views
+          - cambiar-contrasena
+          - dieta
+          - editar-perfil
           - main
+          - objetivo
+          - recuperar-contrasena
+          - rutina
           - signin
           - signup
-        - services
       - assets
         - fonts
         - icons

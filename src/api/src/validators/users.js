@@ -15,6 +15,7 @@ const validateCreate = [
     .isLength({
         max: 15
     })
+    .withMessage('El nombre de usuario es requerido y debe tener máximo 15 caracteres')
     .custom(async (value) => {
         const user = await User.findOne({
             nombre_usuario: value
@@ -36,7 +37,6 @@ const validateCreate = [
         });
         if (user) {
             throw new Error('El correo ya está en uso');
-
         }
         return true;
     }),
@@ -62,22 +62,26 @@ const validateCreate = [
     .isLength({
         min: 8,
         max: 15
-    }).withMessage('La contraseña debe tener entre 8 y 15 caracteres')
-    .matches(/[A-Z]/).withMessage('La contraseña debe tener al menos una letra mayúscula')
-    .matches(/[0-9]/).withMessage('La contraseña debe tener al menos un número'),
+    })
+    .withMessage('La contraseña debe tener entre 8 y 15 caracteres')
+    .matches(/[A-Z]/)
+    .withMessage('La contraseña debe tener al menos una letra mayúscula')
+    .matches(/[0-9]/)
+    .withMessage('La contraseña debe tener al menos un número'),
 
     check('peso')
     .exists()
     .not()
     .isEmpty()
     .isNumeric()
+    .withMessage('El peso es requerido y debe ser un número')
     .custom((value, {
         req
     }) => {
         if (value < 0 || value > 250) {
-            throw new Error('El peso debe ser entre 0 y 250 kg')
+            throw new Error('El peso debe ser entre 0 y 250 kg');
         }
-        return true
+        return true;
     }),
 
     check('altura')
@@ -85,37 +89,38 @@ const validateCreate = [
     .not()
     .isEmpty()
     .isNumeric()
+    .withMessage('La altura es requerida y debe ser un número')
     .custom((value, {
         req
     }) => {
         if (value < 20 || value > 250) {
-            throw new Error('La altura debe ser entre 20 y 250 cm')
+            throw new Error('La altura debe ser entre 20 y 250 cm');
         }
-        return true
+        return true;
     }),
 
     (req, res, next) => {
-        validateResult(req, res, next)
-    }
-]
+        validateResult(req, res, next);
+    },
+];
 
 // Validación de edición de un usuario
 const validateEdit = [
     check('nombre_usuario')
-    .optional() // Permite que el campo sea opcional en la edición
+    .optional()
     .not()
     .isEmpty()
     .isLength({
         max: 15
     })
+    .withMessage('El nombre de usuario debe tener máximo 15 caracteres')
     .custom(async (value, {
         req
     }) => {
-        // Comprueba si el nombre de usuario ya está en uso por otro usuario, excluyendo el usuario actual
         const user = await User.findOne({
             nombre_usuario: value,
             _id: {
-                $ne: req.params.id // Asegura que el ID actual no coincida con el usuario existente
+                $ne: req.params.id
             }
         });
         if (user) {
@@ -125,18 +130,17 @@ const validateEdit = [
     }),
 
     check('email')
-    .optional() // Permite que el campo sea opcional en la edición
+    .optional()
     .not()
     .isEmpty()
     .isEmail().withMessage('El email debe ser un email con formato correcto')
     .custom(async (value, {
         req
     }) => {
-        // Comprueba si el correo electrónico ya está en uso por otro usuario, excluyendo el usuario actual
         const user = await User.findOne({
             email: value,
             _id: {
-                $ne: req.params.id // Asegura que el ID actual no coincida con el usuario existente
+                $ne: req.params.id
             }
         });
         if (user) {
@@ -146,24 +150,25 @@ const validateEdit = [
     }),
 
     check('sexo')
-    .optional() // Permite que el campo sea opcional en la edición
+    .optional()
     .not()
     .isEmpty()
     .isIn(['hombre', 'mujer'])
     .withMessage('El sexo debe ser hombre o mujer'),
 
     check('fecha_nacimiento')
-    .optional() // Permite que el campo sea opcional en la edición
+    .optional()
     .not()
     .isEmpty()
     .isDate()
     .withMessage('La fecha de nacimiento debe ser una fecha válida'),
 
     check('peso')
-    .optional() // Permite que el campo sea opcional en la edición
+    .optional()
     .not()
     .isEmpty()
     .isNumeric()
+    .withMessage('El peso debe ser un número')
     .custom((value) => {
         if (value < 0 || value > 250) {
             throw new Error('El peso debe ser entre 0 y 250 kg');
@@ -172,10 +177,11 @@ const validateEdit = [
     }),
 
     check('altura')
-    .optional() // Permite que el campo sea opcional en la edición
+    .optional()
     .not()
     .isEmpty()
     .isNumeric()
+    .withMessage('La altura debe ser un número')
     .custom((value) => {
         if (value < 20 || value > 250) {
             throw new Error('La altura debe ser entre 20 y 250 cm');
@@ -184,9 +190,9 @@ const validateEdit = [
     }),
 
     (req, res, next) => {
-        validateResult(req, res, next)
-    }
-]
+        validateResult(req, res, next);
+    },
+];
 
 // Validación de cambio de contraseña de un usuario
 const validateChangePassword = [
@@ -221,5 +227,7 @@ const validateChangePassword = [
 ]
 
 module.exports = {
-    validateCreate, validateEdit, validateChangePassword
+    validateCreate,
+    validateEdit,
+    validateChangePassword
 }
